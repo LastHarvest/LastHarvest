@@ -31,11 +31,35 @@ class player:
         """Return the list of resource IDs in possession."""
         return self.possession
 
+    def get_pos_to_resource(resource):
+        """Return the position coordinates of the given resource."""
+        return resource.position  # Assuming 'resource' has a 'position' attribute
+
     def get_best_resource(self, resources):
         """Return the best resource based on some criteria."""
         # Placeholder implementation; you can define your own criteria
         return max(resources, key=lambda r: r.value)  # Assuming 'resources' have a 'value' attribute
 
-    def get_pos_to_resource(self, resource):
-        """Return the position coordinates of the given resource."""
-        return resource.position  # Assuming 'resource' has a 'position' attribute
+    def collect_resource(self, resource):
+        """Collect the resource if the player moves to its position."""
+        if resource.get_isFree() and self.get_pos() == resource.get_position():
+            resource.set_isFree()
+            self.possession.append(resource)
+
+    def move_up(self):
+        if self.position[1] > 0:
+            self.position = (self.position[0], self.position[1] - 1)
+
+
+    def move_down(self):
+        if self.position[1] < 6:
+            self.position = (self.position[0], self.position[1] + 1)
+
+    def move_left(self):
+        if self.position[0] > 0:
+            self.position = (self.position[0] - 1, self.position[1])
+
+    def move_right(self):
+        if self.position[0] < 6:
+            self.position = (self.position[0] + 1, self.position[1])
+
