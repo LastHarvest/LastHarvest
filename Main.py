@@ -6,8 +6,6 @@ from Game import Game
 from Player import player
 from Resource import Resource
 
-
-
 # Initialize pygame
 pygame.init()
 
