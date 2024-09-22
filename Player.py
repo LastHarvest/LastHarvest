@@ -58,8 +58,3 @@ class player:
     def move_left(self):
         if self.position[0] > 0:
             self.position = (self.position[0] - 1, self.position[1])
-
-    def move_right(self):
-        if self.position[0] < 6:
-            self.position = (self.position[0] + 1, self.position[1])
-
