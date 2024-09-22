@@ -55,6 +55,24 @@ def move_player_randomly(player):
         player.move_right()
     check_for_resources(player)
 
+
+def move_player_to_ressource(player,ressource):
+    p = player.get_pos()
+    r = ressource.get_position()
+    while ressource.get_isFree() :
+        if p[0] < r [0] :
+            player.move_right()
+        elif p[0] > r[0]:
+            player.move_left()
+        else :
+            if p[1] < r [1] :
+                player.move_up()
+            elif p[1] > r[1]:
+                player.move_down()
+    check_for_resources(player)
+
+
+
 def draw_resources():
     """Draw the resources on the grid."""
     for resource in game_instance.get_resources():
@@ -104,3 +122,4 @@ while running:
 # Quit pygame
 pygame.quit()
 sys.exit()
+

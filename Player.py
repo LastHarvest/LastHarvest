@@ -1,8 +1,10 @@
+
 import math
 
 from pygame.mouse import get_pos
 
 from Main import resources
+
 
 
 class player:
@@ -21,10 +23,12 @@ class player:
         """Add points to the agent's total."""
         self.points += points
 
+
     def add_possession(self, resource):
-        """Add a resource ID to the agent's possession."""
+        """Add a resource to the agent's possession."""
         if resource not in self.possession:
             self.possession.append(resource)
+
 
     def get_pos(self):
         """Return the current position of the agent."""
@@ -80,6 +84,7 @@ class player:
             self.add_possession(resource)
 
 
+
     def move_up(self):
         if self.position[1] > 0:
             self.position = (self.position[0], self.position[1] - 1)
@@ -96,4 +101,5 @@ class player:
     def move_right(self):
         if self.position[0] < 6:
             self.position = (self.position[0] + 1, self.position[1])
+
 
