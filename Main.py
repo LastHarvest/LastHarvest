@@ -24,12 +24,12 @@ players = [player(1, "Player1", (0, 0), [], 0),
            player(2, "Player2", (6, 6), [], 0)]
 
 resources = [
-    Resource(2, 9, (3, 4), "Apple", True),
-    Resource(3, 30, (2, 1), "Water", True),
-    Resource(4, 15, (0, 4), "Meat", True),
-    Resource(1, 10, (6, 0), "Fish", True),
-    Resource(6, 25, (1, 6), "Blueberry", True),
-    Resource(5, 20, (4, 0), "Wood", True)
+    Resource(2, 9, (3, 4), "Food", True),
+    Resource(3, 30, (2, 1), "Hydration", True),
+    Resource(4, 15, (0, 4), "Food", True),
+    Resource(1, 10, (6, 0), "Food", True),
+    Resource(6, 25, (1, 6), "Food", True),
+    Resource(5, 20, (4, 0), "Hydration", True)
 ]
 
 game_instance = Game(1, players, resources)
