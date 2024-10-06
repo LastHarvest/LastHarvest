@@ -24,12 +24,12 @@ players = [player(1, "Player1", (0, 0), [], 0),
            player(2, "Player2", (6, 6), [], 0)]
 
 resources = [
-    Resource(2, 9, (3, 4), "Apple", True),
-    Resource(3, 30, (2, 1), "Water", True),
-    Resource(4, 15, (0, 4), "Meat", True),
-    Resource(1, 10, (6, 0), "Fish", True),
-    Resource(6, 25, (1, 6), "Blueberry", True),
-    Resource(5, 20, (4, 0), "Wood", True)
+    Resource(2, 9, (3, 4), "Food", True),
+    Resource(3, 30, (2, 1), "Hydration", True),
+    Resource(4, 15, (0, 4), "Food", True),
+    Resource(1, 10, (6, 0), "Food", True),
+    Resource(6, 25, (1, 6), "Food", True),
+    Resource(5, 20, (4, 0), "Hydration", True)
 ]
 
 game_instance = Game(1, players, resources)
@@ -55,20 +55,27 @@ def move_player_randomly(player):
         player.move_right()
     check_for_resources(player)
 
-def move_player_to_ressource(player,ressource):
+
+def move_player_to_resource(player, resource):
+    """moves the player to the given resource"""
     p = player.get_pos()
-    r = ressource.get_position()
-    while ressource.get_isFree() :
-        if p[0] < r [0] :
+    r = resource.get_position()
+    while resource.get_isFree():
+        if p[0] < r[0]:
             player.move_right()
         elif p[0] > r[0]:
             player.move_left()
-        else :
-            if p[1] < r [1] :
-                player.move_up()
-            elif p[1] > r[1]:
-                player.move_down()
-    check_for_resources(player)
+        if p[1] < r[1]:
+            player.move_up()
+        elif p[1] > r[1]:
+            player.move_down()
+
+        #update the player position
+        p = player.get_pos()
+        check_for_resources(player)
+
+
+
 
 
 def draw_resources():
@@ -91,7 +98,8 @@ while running:
     if current_time - last_time >= 1:
         game_instance.increment_time()
         for player in game_instance.get_players():
-            move_player_randomly(player)
+            move_player_to_resource(player,player.get_best_resource(resources))
+            #move_player_randomly(player)
         draw_resources()
         last_time = current_time
 
@@ -120,3 +128,4 @@ while running:
 # Quit pygame
 pygame.quit()
 sys.exit()
+

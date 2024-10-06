@@ -46,3 +46,4 @@ class Game:
 
     def increment_time(self):
         self.__time += 1
+
