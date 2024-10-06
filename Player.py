@@ -3,7 +3,7 @@ import math
 
 from pygame.mouse import get_pos
 
-from Main import resources
+
 
 
 
@@ -42,38 +42,41 @@ class player:
         """Return the list of resources in possession."""
         return self.possession
 
-    def get_pos_to_resource(self, resource):
+    def get_pos_of_resource(self, resource):
         """Return the position coordinates of the given resource."""
-        return resource.position  # Assuming 'resource' has a 'position' attribute
+        return resource.get_position()  # Assuming 'resource' has a 'position' attribute
 
     def get_amount_food(self):
         """Return the amount of food in possession (percentage)"""
         food=0
         for r in self.get_possession():
             if r.get_type()=="food": food+=1
-        return food/len(self.get_possession())
+        return food/(len(self.get_possession())+1)
 
     def get_amount_hydration(self):
         return 1-self.get_amount_food()
 
     def get_distance_resource(self, resource):
-        """Returns the distance between the agent and the resource"""
-        return math.sqrt((self.get_pos_to_resource(resource)[0]-self.get_pos()[0])**2+(self.get_pos_to_resource(resource)[1]-self.get_pos()[1]))
+        pos_player = self.get_pos()
+        pos_resource = resource.get_position()
+
+        return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
+
 
 
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
         if resource.get_type()=="food":
-            return (resource.get_value()*resource.get_amount_food())/(self.get_distance_resource(resource)+1)
+            return (resource.get_value()*self.get_amount_food())/(self.get_distance_resource(resource)+1)
         else:
-            return (resource.get_value()*resource.get_amount_hydration())/(self.get_distance_resource(resource)+1)
+            return (resource.get_value()*self.get_amount_hydration())/(self.get_distance_resource(resource)+1)
 
-    def get_best_resource(self):
-        """Return the id of the best resource based on the choice formula"""
+    def get_best_resource(self, resources):
+        """Return the best resource based on the choice formula"""
         maxi=(0,0)
         for r in resources:
              if r.get_isFree() and self.choice_formula(r)>maxi[1]:
-                 maxi=(r.get_id(),self.choice_formula(r))
+                 maxi=(r,self.choice_formula(r))
         return maxi[0]
 
 
@@ -86,13 +89,13 @@ class player:
 
 
     def move_up(self):
-        if self.position[1] > 0:
-            self.position = (self.position[0], self.position[1] - 1)
+        if self.position[1] < 6:
+            self.position = (self.position[0], self.position[1] + 1)
 
 
     def move_down(self):
-        if self.position[1] < 6:
-            self.position = (self.position[0], self.position[1] + 1)
+        if self.position[1] > 0 :
+            self.position = (self.position[0], self.position[1] - 1)
 
     def move_left(self):
         if self.position[0] > 0:
