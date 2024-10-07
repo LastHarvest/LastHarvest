@@ -1,3 +1,5 @@
+
+
 class Resource:
     def __init__(self, id: int, value: int, position: tuple, type: str, isFree: bool):
         self.__id = id
