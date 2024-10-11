@@ -23,6 +23,8 @@ image3=pygame.image.load('food3.png')
 image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
 image4 = pygame.image.load('water.png')
 image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+arme = pygame.image.load('Arme.png')
+arme = pygame.transform.scale(arme,(int(cell_size*0.8),int(cell_size*0.8)))
 
 
 
@@ -31,10 +33,11 @@ screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
 # Create an instance of the Game class
-players = [player(1, "Player1", (0, 0), [], 0),
-           player(2, "Player2", (6, 6), [], 0)]
+players = [player(1, "Player1", (0, 0), [], 0, False),
+           player(2, "Player2", (6, 6), [], 0, False)]
 
 resources = [
+    Resource(0, 0, (3, 3), "Arme", 0,True),
     Resource(2, 9, (3, 4), "Food", 1,True),
     Resource(3, 30, (2, 1), "Hydration",2, True),
     Resource(4, 15, (0, 4), "Food", 2,True),
@@ -111,6 +114,10 @@ def nb_Libre():
             cpt+=1
     return cpt
 
+def tuer():
+    if point>100:
+        v=0
+
 
 def draw_resources():
     """Draw the resources on the grid."""
@@ -122,7 +129,10 @@ def draw_resources():
                 listImg = [image1,image2,image3]
                 image = listImg[resource.get_item()-1]
                 screen.blit(image, pixel_pos)
-            else: screen.blit(image4, pixel_pos)
+            elif resource.get_type()=="Hydration": 
+                screen.blit(image4, pixel_pos)
+            else :
+                screen.blit(arme, pixel_pos)
 
 
 # Main loop
@@ -142,7 +152,7 @@ while running:
         for player in game_instance.get_players():
             move_player_to_resource(player,player.get_best_resource(resources))
             #move_player_randomly(player)
-        if nb_Libre()!=6 and nb_Resources<nb_ResourcesMax:
+        if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
             nb_Resources+=1
             add_ressources(nb_Resources)
         draw_resources()
