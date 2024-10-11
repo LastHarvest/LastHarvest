@@ -68,12 +68,6 @@ def move_player_randomly(player):
     check_for_resources(player)
 
 
-
-
-
-
-
-
 def draw_resources():
     """Draw the resources on the grid."""
     for resource in game_instance.get_resources():
@@ -85,6 +79,14 @@ def draw_resources():
                 image = listImg[resource.get_item()-1]
                 screen.blit(image, pixel_pos)
             else: screen.blit(image4, pixel_pos)
+
+def draw_player_points():
+    """Draw the players' points on the screen."""
+    y_offset = 40
+    for player in game_instance.get_players():
+        points_text = font.render(f"{player.name} Points: {player.get_points()}", True, (0, 0, 0))
+        screen.blit(points_text, (10, y_offset))
+        y_offset += 30
 
 # Main loop
 running = True
@@ -119,6 +121,7 @@ while running:
         pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
 
     draw_resources()
+    draw_player_points()
     # Render the time text
     time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
     screen.blit(time_text, (10, 10))

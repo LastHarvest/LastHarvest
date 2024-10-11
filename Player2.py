@@ -10,7 +10,7 @@ class Player2(Player):
         sum=0
         for r in self.possession:
             sum+=r.get_value()
-        self.points += sum*2
+        self.points = sum*2
 
     def move_player_to_resource(self, resource):
         p = self.get_pos()
