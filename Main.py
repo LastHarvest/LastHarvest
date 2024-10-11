@@ -79,11 +79,10 @@ def move_player_to_resource(player, resource):
        player.move_up()
     elif p[1] > r[1]:
        player.move_down()
-           
+
      #update the player position
     p = player.get_pos()
     check_for_resources(player)
-
 
 
 
