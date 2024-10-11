@@ -1,10 +1,11 @@
 class Resource:
-    def __init__(self, id: int, value: int, position: tuple, type: str, isFree: bool):
+    def __init__(self, id: int, value: int, position: tuple, type: str, item: int, isFree: bool):
         self.__id = id
         self.__value = value
         self.__position = position
         self.__type = type
         self.__isFree = isFree
+        self.__item = item
 
     def get_id(self) -> int:
         return self.__id
@@ -35,3 +36,6 @@ class Resource:
 
     def set_isFree(self ):
         self.__isFree = False
+
+    def get_item(self):
+        return self.__item
