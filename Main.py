@@ -64,14 +64,14 @@ def move_player_to_resource(player, resource):
       player.move_right()
     elif p[0] > r[0]:
        player.move_left()
-     if p[1] < r[1]:
+    if p[1] < r[1]:
        player.move_up()
-     elif p[1] > r[1]:
+    elif p[1] > r[1]:
        player.move_down()
            
      #update the player position
-     p = player.get_pos()
-     check_for_resources(player)
+    p = player.get_pos()
+    check_for_resources(player)
 
 
 
