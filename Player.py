@@ -1,11 +1,4 @@
-
 import math
-
-from pygame.mouse import get_pos
-
-
-
-
 
 class player:
     def __init__(self,id,name,position,possession,points):
@@ -15,28 +8,14 @@ class player:
         self.possession = possession
         self.points = points
 
+##GETTERS
     def get_points(self):
         """Return the current points of the agent."""
         return self.points
 
-    def add_points(self, points):
-        """Add points to the agent's total."""
-        self.points += points
-
-
-    def add_possession(self, resource):
-        """Add a resource to the agent's possession."""
-        if resource not in self.possession:
-            self.possession.append(resource)
-
-
     def get_pos(self):
         """Return the current position of the agent."""
         return self.position
-
-    def update_pos(self, new_position):
-        """Update the agent's position."""
-        self.position = new_position
 
     def get_possession(self):
         """Return the list of resources in possession."""
@@ -45,7 +24,6 @@ class player:
     def get_pos_of_resource(self, resource):
         """Return the position coordinates of the given resource."""
         return resource.get_position()  # Assuming 'resource' has a 'position' attribute
-
     def get_amount_food(self):
         """Return the amount of food in possession (percentage)"""
         food=0
@@ -63,7 +41,32 @@ class player:
         return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
 
 
+##ADDERS
+    def add_points(self, points):
+        """Add points to the agent's total."""
+        self.points += points
 
+    def add_possession(self, resource):
+        """Add a resource to the agent's possession."""
+        if resource not in self.possession:
+            self.possession.append(resource)
+
+
+
+##SETTER
+    def set_pos(self, new_position):
+        """Update the agent's position."""
+        self.position = new_position
+
+    def set_points(self):
+        sum = 0
+        for r in self.possession:
+            sum+=r.get_value()
+        self.points = sum
+
+
+
+##SPECIFIC METHODS
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
         if resource.get_type()=="food":
@@ -87,7 +90,7 @@ class player:
             self.add_possession(resource)
 
 
-
+##MOUVEMENTS
     def move_up(self):
         if self.position[1] < 6:
             self.position = (self.position[0], self.position[1] + 1)

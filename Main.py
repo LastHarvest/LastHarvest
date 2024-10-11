@@ -6,13 +6,15 @@ from Game import Game
 from Player import player
 from Resource import Resource
 
-# Initialize pygame
+#Initialize pygame
 pygame.init()
 
-# Set up display
+#Set up display
 window_size = 700  # Window size (700x700 pixels)
 grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
+
+#Loading Images
 image1= pygame.image.load('food.png')
 image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
 image2= pygame.image.load('food2.png')
@@ -28,7 +30,7 @@ image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
 screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
-# Create an instance of the Game class
+#Create an instance of the Game class
 players = [player(1, "Player1", (0, 0), [], 0),
            player(2, "Player2", (6, 6), [], 0)]
 
@@ -43,7 +45,7 @@ resources = [
 
 game_instance = Game(1, players, resources)
 
-# Set up font
+#Set up font
 font = pygame.font.Font(None, 27)
 
 def check_for_resources(player):
@@ -62,21 +64,23 @@ def move_player_randomly(player):
         player.move_left()
     elif move == 'right':
         player.move_right()
+
     check_for_resources(player)
 
 
-def move_player_to_resource(player, resource):
+def move_player_to_resource(resource):
     """moves the player to the given resource"""
     p = player.get_pos()
     r = resource.get_position()
     if p[0] < r[0]:
       player.move_right()
     elif p[0] > r[0]:
-       player.move_left()
-    if p[1] < r[1]:
-       player.move_up()
-    elif p[1] > r[1]:
-       player.move_down()
+        player.move_left()
+    else:
+        if p[1] < r[1]:
+            player.move_up()
+        if p[1] > r[1]:
+            player.move_down()
 
      #update the player position
     p = player.get_pos()
@@ -106,13 +110,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Increment game time and move players every second
     current_time = time.time()
     if current_time - last_time >= 1:
         game_instance.increment_time()
-        for player in game_instance.get_players():
-            move_player_to_resource(player,player.get_best_resource(resources))
-            #move_player_randomly(player)
+        for p in players:
+                move_player_to_resource(player,player.get_best_resource(resources))
         draw_resources()
         last_time = current_time
 
