@@ -1,10 +1,5 @@
-
 import math
-
 from pygame.mouse import get_pos
-
-
-
 
 
 class player:
@@ -15,13 +10,21 @@ class player:
         self.possession = possession
         self.points = points
 
-    def get_points(self):
+    def get_pointsN(self):
         """Return the current points of the agent."""
-        return self.points
+        return self.pointsN
 
-    def add_points(self, points):
+    def add_pointsN(self, points):
         """Add points to the agent's total."""
-        self.points += points
+        self.pointsN += points
+
+    def get_pointsE(self):
+        """Return the current points of the agent."""
+        return self.pointsE
+
+    def add_pointsE(self, points):
+        """Add points to the agent's total."""
+        self.pointsE += points
 
 
     def add_possession(self, resource):
