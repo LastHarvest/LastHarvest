@@ -61,15 +61,15 @@ def move_player_to_resource(player, resource):
     p = player.get_pos()
     r = resource.get_position()
     if p[0] < r[0]:
-        player.move_right()
+      player.move_right()
     elif p[0] > r[0]:
-        player.move_left()
+       player.move_left()
     if p[1] < r[1]:
-        player.move_up()
+       player.move_up()
     elif p[1] > r[1]:
-        player.move_down()
-
-    #update the player position
+       player.move_down()
+           
+     #update the player position
     p = player.get_pos()
     check_for_resources(player)
 
@@ -127,3 +127,4 @@ while running:
 # Quit pygame
 pygame.quit()
 sys.exit()
+

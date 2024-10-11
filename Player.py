@@ -104,3 +104,5 @@ class player:
     def move_right(self):
         if self.position[0] < 6:
             self.position = (self.position[0] + 1, self.position[1])
+
+
