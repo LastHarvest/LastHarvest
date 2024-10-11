@@ -176,6 +176,7 @@ while running:
             pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
 
     draw_resources()
+    draw_player_points()
     # Render the time text
     time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
     screen.blit(time_text, (10, 10))

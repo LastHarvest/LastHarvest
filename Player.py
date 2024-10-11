@@ -15,9 +15,6 @@ class Player(ABC):
         self.arme = False
         self.vivant = True
 
-    def get_points(self):
-        """Return the current points of the agent."""
-        return self.points
 
     @abstractmethod
     def set_points(self):
@@ -28,16 +25,26 @@ class Player(ABC):
         pass
 
 
+<<<<<<< HEAD
 
     def add_points(self, points):
         """Add points to the agent's total."""
         self.points += points
 
+=======
+>>>>>>> origin
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
         if resource not in self.possession:
             self.possession.append(resource)
 
+<<<<<<< HEAD
+=======
+
+    def get_points(self):
+        return self.points
+
+>>>>>>> origin
     def get_pos(self):
         """Return the current position of the agent."""
         return self.position
@@ -105,8 +112,12 @@ class Player(ABC):
         if resource.get_isFree() and self.get_pos() == resource.get_position():
             resource.set_isFree()
             self.add_possession(resource)
+<<<<<<< HEAD
         if resource.get_type == "Arme":
             self.arme=True
+=======
+            self.set_points()
+>>>>>>> origin
 
 
 
