@@ -38,7 +38,7 @@ players = [Player1(1, "Player1", (0, 0)),
            Player2(2, "Player2", (6, 6))]
 
 resources = [
-    Resource(0, 0, (3, 3), "Arme", 0,True),
+    Resource(0, 0, (3, 3), "Arme", 0,False),
     Resource(2, 9, (3, 4), "Food", 1,True),
     Resource(3, 30, (2, 1), "Hydration",2, True),
     Resource(4, 15, (0, 4), "Food", 2,True),
@@ -71,22 +71,6 @@ def move_player_randomly(player):
     check_for_resources(player)
 
 
-<<<<<<< HEAD
-def move_player_to_resource(player, resource):
-    """moves the player to the given resource"""
-    p = player.get_pos()
-    r = resource.get_position()
-    if p[0] < r[0]:
-      player.move_right()
-    elif p[0] > r[0]:
-       player.move_left()
-    else :
-        if p[1] < r[1]:
-            player.move_up()
-        elif p[1] > r[1]:
-            player.move_down()
-=======
->>>>>>> origin
 
 
 def add_ressources(nb):
@@ -145,6 +129,7 @@ running = True
 last_time = time.time()
 nb_Resources = 6
 nb_ResourcesMax = 15
+PointArme=0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -155,16 +140,11 @@ while running:
     if current_time - last_time >= 1:
         game_instance.increment_time()
         for player in game_instance.get_players():
-<<<<<<< HEAD
-            move_player_to_resource(player,player.get_best_resource(resources))
-            #move_player_randomly(player)
+            player.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(player)
         if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
             nb_Resources+=1
             add_ressources(nb_Resources)
-=======
-            player.move_player_to_resource(player.get_best_resource(resources))
-            check_for_resources(player)
->>>>>>> origin
         draw_resources()
         play = game_instance.get_players()
         if play[0].get_arme:
@@ -172,6 +152,13 @@ while running:
         if play[1].get_arme:
             tuer(play[1],play[0])
         last_time = current_time
+        print(play[0].get_points())
+        print(play[1].get_points())
+        PointArme = play[1].get_points() + play[1].get_points()
+        if PointArme > 30 and play[0].get_arme() == False and play[1].get_arme() == False:
+            resources[0].set_isFree2()
+            print(play[0].get_arme())
+            print(play[1].get_arme())
 
     # Fill the screen with white color
     screen.fill((255, 255, 255))
