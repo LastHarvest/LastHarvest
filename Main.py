@@ -94,12 +94,12 @@ def add_ressources(nb):
     for ressources in resources:
         if ressources.get_isFree():
             tab.append(ressources.get_position())
-    x = random.randrange(0,6)
-    y = random.randrange(0,6)
+    x = random.randrange(0,7)
+    y = random.randrange(0,7)
     while (x,y) in tab :
-        x = random.randrange(0,6)
-        y = random.randrange(0,6)
-    image = random.randrange(1,3)
+        x = random.randrange(0,7)
+        y = random.randrange(0,7)
+    image = random.randrange(1,4)
     val = random.randrange(9,20)
     test = random.randrange(1,3)
     if test == 1:
@@ -161,6 +161,11 @@ while running:
             nb_Resources+=1
             add_ressources(nb_Resources)
         draw_resources()
+        play = game_instance.get_players()
+        if play[0].get_arme:
+            tuer(play[0],play[1])
+        if play[1].get_arme:
+            tuer(play[1],play[0])
         last_time = current_time
 
     # Fill the screen with white color
@@ -174,8 +179,9 @@ while running:
 
     # Draw the players
     for player in game_instance.get_players():
-        player_pos = player.get_pos()
-        pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
+        if player.get_vivant():
+            player_pos = player.get_pos()
+            pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
 
     draw_resources()
     # Render the time text

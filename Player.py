@@ -12,6 +12,8 @@ class Player(ABC):
         self.position = position
         self.possession = []
         self.points = 0
+        self.arme = False
+        self.vivant = True
 
     def get_points(self):
         """Return the current points of the agent."""
@@ -97,6 +99,8 @@ class Player(ABC):
         if resource.get_isFree() and self.get_pos() == resource.get_position():
             resource.set_isFree()
             self.add_possession(resource)
+        if resource.get_type == "Arme":
+            self.arme=True
 
 
 
