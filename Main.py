@@ -60,19 +60,18 @@ def move_player_to_resource(player, resource):
     """moves the player to the given resource"""
     p = player.get_pos()
     r = resource.get_position()
-    while resource.get_isFree():
-        if p[0] < r[0]:
-            player.move_right()
-        elif p[0] > r[0]:
-            player.move_left()
-        if p[1] < r[1]:
-            player.move_up()
-        elif p[1] > r[1]:
-            player.move_down()
-
-        #update the player position
-        p = player.get_pos()
-        check_for_resources(player)
+    if p[0] < r[0]:
+      player.move_right()
+    elif p[0] > r[0]:
+       player.move_left()
+     if p[1] < r[1]:
+       player.move_up()
+     elif p[1] > r[1]:
+       player.move_down()
+           
+     #update the player position
+     p = player.get_pos()
+     check_for_resources(player)
 
 
 
