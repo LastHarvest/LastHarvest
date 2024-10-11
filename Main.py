@@ -33,8 +33,8 @@ screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
 # Create an instance of the Game class
-players = [player(1, "Player1", (0, 0), [], 0, False),
-           player(2, "Player2", (6, 6), [], 0, False)]
+players = [player(1, "Player1", (0, 0), [], 0, False,True),
+           player(2, "Player2", (6, 6), [], 0, False,True)]
 
 resources = [
     Resource(0, 0, (3, 3), "Arme", 0,True),
@@ -114,9 +114,13 @@ def nb_Libre():
             cpt+=1
     return cpt
 
-def tuer():
-    if point>100:
-        v=0
+def tuer(p1,p2):
+    if p1.arme==True and p2.get_vivant():
+        pos = p1.get_pos()
+        tab = [(pos[0]+1,pos[1]),(pos[0]+1,pos[1]+1),(pos[0]+1,pos[1]-1),(pos[0],pos[1]+1),(pos[0],pos[1]-1),(pos[0]-1,pos[1]-1),
+               (pos[0]-1,pos[1]),(pos[0]-1,pos[1]+1)]
+        if p2.get_pos() in tab:
+            p2.update_vivant(False)
 
 
 def draw_resources():

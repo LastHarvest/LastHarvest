@@ -3,36 +3,27 @@ from pygame.mouse import get_pos
 
 
 class player:
-    def __init__(self,id,name,position,possession,points,arme):
+    def __init__(self,id,name,position,possession,points,arme,vivant):
         self.id = id
         self.name = name
         self.position = position
         self.possession = possession
         self.points = points
         self.arme = arme
+        self.vivant = vivant
 
-    def get_pointsN(self):
+    def get_points(self):
         """Return the current points of the agent."""
-        return self.pointsN
+        return self.points
 
-    def add_pointsN(self, points):
+    def add_points(self, points):
         """Add points to the agent's total."""
-        self.pointsN += points
-
-    def get_pointsE(self):
-        """Return the current points of the agent."""
-        return self.pointsE
-
-    def add_pointsE(self, points):
-        """Add points to the agent's total."""
-        self.pointsE += points
-
+        self.points += points
 
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
         if resource not in self.possession:
             self.possession.append(resource)
-
 
     def get_pos(self):
         """Return the current position of the agent."""
@@ -47,6 +38,12 @@ class player:
 
     def update_arme(self,state):
         self.arme = state
+    
+    def get_vivant(self):
+        return self.vivant
+    
+    def update_vivant(self,etat):
+        self.vivant = etat
 
     def get_possession(self):
         """Return the list of resources in possession."""
