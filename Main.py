@@ -15,6 +15,17 @@ pygame.init()
 window_size = 700  # Window size (700x700 pixels)
 grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
+image1= pygame.image.load('food.png')
+image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
+image2= pygame.image.load('food2.png')
+image2 = pygame.transform.scale(image2,(int(cell_size*0.8),int(cell_size*0.8)))
+image3=pygame.image.load('food3.png')
+image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
+image4 = pygame.image.load('water.png')
+image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+
+
+
 
 screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
@@ -24,12 +35,12 @@ players = [player(1, "Player1", (0, 0), [], 0),
            player(2, "Player2", (6, 6), [], 0)]
 
 resources = [
-    Resource(2, 9, (3, 4), "Food", True),
-    Resource(3, 30, (2, 1), "Hydration", True),
-    Resource(4, 15, (0, 4), "Food", True),
-    Resource(1, 10, (6, 0), "Food", True),
-    Resource(6, 25, (1, 6), "Food", True),
-    Resource(5, 20, (4, 0), "Hydration", True)
+    Resource(2, 9, (3, 4), "Food", 1,True),
+    Resource(3, 30, (2, 1), "Hydration",2, True),
+    Resource(4, 15, (0, 4), "Food", 2,True),
+    Resource(1, 10, (6, 0), "Food",3, True),
+    Resource(6, 25, (1, 6), "Food",2, True),
+    Resource(5, 20, (4, 0), "Hydration", 2,True)
 ]
 
 game_instance = Game(1, players, resources)
@@ -78,12 +89,18 @@ def move_player_to_resource(player, resource):
 
 
 
+
 def draw_resources():
     """Draw the resources on the grid."""
     for resource in game_instance.get_resources():
         if resource.get_isFree():
             resource_pos = resource.get_position()
-            pygame.draw.rect(screen, (0, 255, 0), (resource_pos[0] * cell_size, resource_pos[1] * cell_size, cell_size, cell_size))
+            pixel_pos=(resource_pos[0]*cell_size, resource_pos[1]*cell_size)
+            if resource.get_type()=="Food":
+                listImg = [image1,image2,image3]
+                image = listImg[resource.get_item()-1]
+                screen.blit(image, pixel_pos)
+            else: screen.blit(image4, pixel_pos)
 
 # Main loop
 running = True

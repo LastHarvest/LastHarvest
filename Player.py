@@ -92,7 +92,6 @@ class player:
         if self.position[1] < 6:
             self.position = (self.position[0], self.position[1] + 1)
 
-
     def move_down(self):
         if self.position[1] > 0 :
             self.position = (self.position[0], self.position[1] - 1)
