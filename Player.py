@@ -1,5 +1,6 @@
 
 import math
+from abc import ABC, abstractmethod
 
 from pygame.mouse import get_pos
 
@@ -7,17 +8,22 @@ from pygame.mouse import get_pos
 
 
 
-class player:
-    def __init__(self,id,name,position,possession,points):
+class Player(ABC):
+
+    def __init__(self,id,name,position):
         self.id = id
         self.name = name
         self.position = position
-        self.possession = possession
-        self.points = points
+        self.possession = []
+        self.points = 0
 
     def get_points(self):
         """Return the current points of the agent."""
         return self.points
+
+    @abstractmethod
+    def set_points(self):
+        pass
 
     def add_points(self, points):
         """Add points to the agent's total."""
