@@ -79,10 +79,18 @@ def move_player_to_resource(player, resource):
 
 def draw_resources():
     """Draw the resources on the grid."""
+    cpt = 0
     for resource in game_instance.get_resources():
         if resource.get_isFree():
+            cpt +=1
             resource_pos = resource.get_position()
             pygame.draw.rect(screen, (0, 255, 0), (resource_pos[0] * cell_size, resource_pos[1] * cell_size, cell_size, cell_size))
+        else :
+            if resource.get_type == "Food":
+                resource[cpt] = Resource(resource.get_id, 9, (3, 4), "Food", True)
+            else :
+                resource[cpt] = Resource(resource.get_id, 9, (3, 4), "Hydration", True)
+
 
 # Main loop
 running = True
