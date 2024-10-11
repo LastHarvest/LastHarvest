@@ -71,6 +71,7 @@ def move_player_randomly(player):
     check_for_resources(player)
 
 
+<<<<<<< HEAD
 def move_player_to_resource(player, resource):
     """moves the player to the given resource"""
     p = player.get_pos()
@@ -84,10 +85,9 @@ def move_player_to_resource(player, resource):
             player.move_up()
         elif p[1] > r[1]:
             player.move_down()
+=======
+>>>>>>> origin
 
-     #update the player position
-    p = player.get_pos()
-    check_for_resources(player)
 
 def add_ressources(nb):
     tab = []
@@ -155,11 +155,16 @@ while running:
     if current_time - last_time >= 1:
         game_instance.increment_time()
         for player in game_instance.get_players():
+<<<<<<< HEAD
             move_player_to_resource(player,player.get_best_resource(resources))
             #move_player_randomly(player)
         if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
             nb_Resources+=1
             add_ressources(nb_Resources)
+=======
+            player.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(player)
+>>>>>>> origin
         draw_resources()
         play = game_instance.get_players()
         if play[0].get_arme:

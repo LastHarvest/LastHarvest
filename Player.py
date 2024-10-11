@@ -23,6 +23,12 @@ class Player(ABC):
     def set_points(self):
         pass
 
+    @abstractmethod
+    def move_player_to_resource(self, resource):
+        pass
+
+
+
     def add_points(self, points):
         """Add points to the agent's total."""
         self.points += points
@@ -119,5 +125,3 @@ class Player(ABC):
     def move_right(self):
         if self.position[0] < 6:
             self.position = (self.position[0] + 1, self.position[1])
-
-
