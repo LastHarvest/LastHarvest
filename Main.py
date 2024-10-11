@@ -3,7 +3,8 @@ import sys
 import time
 import random
 from Game import Game
-from Player import player
+from Player1 import Player1
+from Player2 import Player2
 from Resource import Resource
 
 
@@ -15,13 +16,13 @@ pygame.init()
 window_size = 700  # Window size (700x700 pixels)
 grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
-image1= pygame.image.load('food.png')
+image1= pygame.image.load('Pictures/food.png')
 image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
-image2= pygame.image.load('food2.png')
+image2= pygame.image.load('Pictures/food2.png')
 image2 = pygame.transform.scale(image2,(int(cell_size*0.8),int(cell_size*0.8)))
-image3=pygame.image.load('food3.png')
+image3=pygame.image.load('Pictures/food3.png')
 image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
-image4 = pygame.image.load('water.png')
+image4 = pygame.image.load('Pictures/water.png')
 image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
 arme = pygame.image.load('Arme.png')
 arme = pygame.transform.scale(arme,(int(cell_size*0.8),int(cell_size*0.8)))
@@ -33,8 +34,8 @@ screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
 # Create an instance of the Game class
-players = [player(1, "Player1", (0, 0), [], 0, False,True),
-           player(2, "Player2", (6, 6), [], 0, False,True)]
+players = [Player1(1, "Player1", (0, 0)),
+           Player2(2, "Player2", (6, 6))]
 
 resources = [
     Resource(0, 0, (3, 3), "Arme", 0,True),
