@@ -75,25 +75,47 @@ def move_player_to_resource(player, resource):
       player.move_right()
     elif p[0] > r[0]:
        player.move_left()
-    if p[1] < r[1]:
-       player.move_up()
-    elif p[1] > r[1]:
-       player.move_down()
+    else :
+        if p[1] < r[1]:
+            player.move_up()
+        elif p[1] > r[1]:
+            player.move_down()
 
      #update the player position
     p = player.get_pos()
     check_for_resources(player)
 
+def add_ressources(nb):
+    tab = []
+    for ressources in resources:
+        if ressources.get_isFree():
+            tab.append(ressources.get_position())
+    x = random.randrange(0,6)
+    y = random.randrange(0,6)
+    while (x,y) in tab :
+        x = random.randrange(0,6)
+        y = random.randrange(0,6)
+    image = random.randrange(1,3)
+    val = random.randrange(9,20)
+    test = random.randrange(1,3)
+    if test == 1:
+        res = Resource(nb, val, (x, y), "Food", image,True)
+    else :
+        res = Resource(nb, val, (x, y), "Hydration", image,True)
+    resources.append(res)
 
-
+def nb_Libre():
+    cpt = 0
+    for ressources in resources :
+        if ressources.get_isFree() :
+            cpt+=1
+    return cpt
 
 
 def draw_resources():
     """Draw the resources on the grid."""
-    cpt = 0
     for resource in game_instance.get_resources():
         if resource.get_isFree():
-            cpt +=1
             resource_pos = resource.get_position()
             pixel_pos=(resource_pos[0]*cell_size, resource_pos[1]*cell_size)
             if resource.get_type()=="Food":
@@ -101,17 +123,13 @@ def draw_resources():
                 image = listImg[resource.get_item()-1]
                 screen.blit(image, pixel_pos)
             else: screen.blit(image4, pixel_pos)
-            pygame.draw.rect(screen, (0, 255, 0), (resource_pos[0] * cell_size, resource_pos[1] * cell_size, cell_size, cell_size))
-        else :
-            if resource.get_type == "Food":
-                resource[cpt] = Resource(resource.get_id, 9, (3, 4), "Food", True)
-            else :
-                resource[cpt] = Resource(resource.get_id, 9, (3, 4), "Hydration", True)
 
 
 # Main loop
 running = True
 last_time = time.time()
+nb_Resources = 6
+nb_ResourcesMax = 15
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -124,6 +142,9 @@ while running:
         for player in game_instance.get_players():
             move_player_to_resource(player,player.get_best_resource(resources))
             #move_player_randomly(player)
+        if nb_Libre()!=6 and nb_Resources<nb_ResourcesMax:
+            nb_Resources+=1
+            add_ressources(nb_Resources)
         draw_resources()
         last_time = current_time
 
