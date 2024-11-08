@@ -16,6 +16,7 @@ pygame.init()
 window_size = 700  # Window size (700x700 pixels)
 grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
+#Import food and water images
 image1= pygame.image.load('Pictures/food.png')
 image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
 image2= pygame.image.load('Pictures/food2.png')
@@ -25,15 +26,23 @@ image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
 image4 = pygame.image.load('Pictures/water.png')
 image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
 
-
+#Import players images
+p1img1=pygame.image.load('Pictures/P1Run1.png')
+p1img1 = pygame.transform.scale(p1img1,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img2=pygame.image.load('Pictures/P1Run2.png')
+p1img2 = pygame.transform.scale(p1img2,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img3=pygame.image.load('Pictures/P1Run3.png')
+p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img4 = pygame.image.load('Pictures/P1Run4.png')
+p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
 
 
 screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
 # Create an instance of the Game class
-players = [Player1(1, "Player1", (0, 0)),
-           Player2(2, "Player2", (6, 6))]
+players = [Player1(1, "Player1", (0, 0),"right"),
+           Player2(2, "Player2", (6, 6),"left")]
 
 resources = [
     Resource(2, 9, (3, 4), "Food", 1,True),
@@ -57,6 +66,7 @@ def move_player_randomly(player):
     """Move the player randomly in one of the four directions."""
     directions = ['up', 'down', 'left', 'right']
     move = random.choice(directions)
+    draw_players(move)
     if move == 'up':
         player.move_up()
     elif move == 'down':
@@ -74,8 +84,10 @@ def move_player_to_resource(player, resource):
     r = resource.get_position()
     if p[0] < r[0]:
       player.move_right()
+      draw_players()
     elif p[0] > r[0]:
        player.move_left()
+       draw_players()
     else:
         if p[1] < r[1]:
            player.move_up()
@@ -83,11 +95,7 @@ def move_player_to_resource(player, resource):
            player.move_down()
 
      #update the player position
-    p = player.get_pos()
     check_for_resources(player)
-
-
-
 
 
 def draw_resources():
@@ -101,6 +109,22 @@ def draw_resources():
                 image = listImg[resource.get_item()-1]
                 screen.blit(image, pixel_pos)
             else: screen.blit(image4, pixel_pos)
+
+def draw_players():
+    """Draw the players on the grid."""
+    for player in game_instance.get_players():
+        direction=player.get_direction()
+        player_pos = player.get_pos()
+        pixel_pos=(player_pos[0]*cell_size, player_pos[1]*cell_size)
+        if player_pos[0]%2==0:
+            if direction=="right":
+                screen.blit(p1img1, pixel_pos)
+            else: screen.blit(p1img3, pixel_pos)
+        else:
+            if direction=="right":
+                screen.blit(p1img2, pixel_pos)
+            else: screen.blit(p1img4, pixel_pos)
+
 
 # Main loop
 running = True
@@ -130,11 +154,12 @@ while running:
             pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
 
     # Draw the players
-    for player in game_instance.get_players():
-        player_pos = player.get_pos()
-        pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
+
+        #pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
 
     draw_resources()
+    draw_players()
+
     # Render the time text
     time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
     screen.blit(time_text, (10, 10))

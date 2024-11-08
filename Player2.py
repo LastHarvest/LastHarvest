@@ -1,11 +1,9 @@
-import math
-
 from Player import Player
 
 
 class Player2(Player):
-    def __init__(self,id,name,position):
-        super().__init__(id,name,position)
+    def __init__(self,id,name,position, direction):
+        super().__init__(id,name,position, direction)
 
     def set_points(self):
         sum=0

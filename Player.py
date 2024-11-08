@@ -5,17 +5,15 @@ from abc import ABC, abstractmethod
 from pygame.mouse import get_pos
 
 
-
-
-
 class Player(ABC):
 
-    def __init__(self,id,name,position):
+    def __init__(self,id,name,position,direction):
         self.id = id
         self.name = name
         self.position = position
         self.possession = []
         self.points = 0
+        self.direction = direction
 
     def get_points(self):
         """Return the current points of the agent."""
@@ -47,6 +45,9 @@ class Player(ABC):
     def get_possession(self):
         """Return the list of resources in possession."""
         return self.possession
+
+    def get_direction(self):
+        return self.direction
 
     def get_pos_of_resource(self, resource):
         """Return the position coordinates of the given resource."""
@@ -105,9 +106,11 @@ class Player(ABC):
     def move_left(self):
         if self.position[0] > 0:
             self.position = (self.position[0] - 1, self.position[1])
+            self.direction="left"
 
     def move_right(self):
         if self.position[0] < 6:
             self.position = (self.position[0] + 1, self.position[1])
+            self.direction="right"
 
 
