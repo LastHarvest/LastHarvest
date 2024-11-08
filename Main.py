@@ -146,26 +146,51 @@ while running:
     current_time = time.time()
     if current_time - last_time >= 1:
         game_instance.increment_time()
-        for player in game_instance.get_players():
-            player.move_player_to_resource(player.get_best_resource(resources))
-            check_for_resources(player)
-        if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
-            nb_Resources+=1
-            add_ressources(nb_Resources)
-        draw_resources()
+        
+        #Savoir qui peut avoir l'arme
         play = game_instance.get_players()
-        if play[0].get_arme:
-            tuer(play[0],play[1])
-        if play[1].get_arme:
-            tuer(play[1],play[0])
-        last_time = current_time
-        print(play[0].get_points())
-        print(play[1].get_points())
-        PointArme = play[1].get_points() + play[1].get_points()
-        if PointArme > 30 and play[0].get_arme() == False and play[1].get_arme() == False:
+        if play[0].avoirArme() :
+            playArme = play[0]
+            playNotArme = play[1]
+        else :
+            playArme = play[1]
+            playNotArme = play[0]
+
+        # Détermination des actions des joueurs
+        if not(playArme.get_arme()) and playArme.get_points()>30:
             resources[0].set_isFree2()
-            print(play[0].get_arme())
-            print(play[1].get_arme())
+            playArme.move_player_to_resource(resources[0])
+            check_for_resources(playArme)
+            if not(resources[0].get_isFree()):
+                playArme.setArme()
+            playNotArme.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(playNotArme)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+        
+        elif playArme.get_arme():
+            playArme.move_player_to_player(playNotArme) # à ameliorer avec un for si on met plus de 2 players
+            tuer(playArme,playNotArme)
+            playNotArme.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(playNotArme)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+            
+        else :
+            for player in game_instance.get_players():
+                player.move_player_to_resource(player.get_best_resource(resources))
+                check_for_resources(player)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+        
+        last_time = current_time
+
 
     # Fill the screen with white color
     screen.fill((255, 255, 255))

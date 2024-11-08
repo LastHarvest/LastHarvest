@@ -24,6 +24,8 @@ class Player(ABC):
     def move_player_to_resource(self, resource):
         pass
 
+    def setArme(self):
+        self.arme = True
 
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""

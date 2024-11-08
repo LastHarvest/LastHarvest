@@ -24,3 +24,6 @@ class Player2(Player):
                 self.move_up()
             elif p[1] > r[1]:
                 self.move_down()
+    
+    def avoirArme(self):
+        return False
