@@ -5,6 +5,7 @@ from Game import Game
 
 
 
+# Initialize pygame
 pygame.init()
 
 window_size = 700
