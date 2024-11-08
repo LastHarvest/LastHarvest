@@ -26,7 +26,7 @@ image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
 image4 = pygame.image.load('Pictures/water.png')
 image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
 
-#Import players images
+#Import player 1 images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
 p1img1 = pygame.transform.scale(p1img1,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img2=pygame.image.load('Pictures/P1Run2.png')
@@ -35,6 +35,8 @@ p1img3=pygame.image.load('Pictures/P1Run3.png')
 p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img4 = pygame.image.load('Pictures/P1Run4.png')
 p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
+
+
 
 
 screen = pygame.display.set_mode((window_size, window_size))
@@ -114,16 +116,24 @@ def draw_players():
     """Draw the players on the grid."""
     for player in game_instance.get_players():
         direction=player.get_direction()
+
         player_pos = player.get_pos()
-        pixel_pos=(player_pos[0]*cell_size, player_pos[1]*cell_size)
+
+        # Position in pixels for the cell's top-left corner
+        cell_top_left = (player_pos[0] * cell_size, player_pos[1] * cell_size)
+
+        # Calculate the size and offset for centering
+        image_size = int(cell_size * 1.3)
+        offset = (image_size - cell_size) // 2
+
+    # Adjust position to center the image
+        centered_position = (cell_top_left[0] - offset, cell_top_left[1] - offset)
+
         if player_pos[0]%2==0:
-            if direction=="right":
-                screen.blit(p1img1, pixel_pos)
-            else: screen.blit(p1img3, pixel_pos)
+            image = p1img1 if direction == "right" else p1img3
         else:
-            if direction=="right":
-                screen.blit(p1img2, pixel_pos)
-            else: screen.blit(p1img4, pixel_pos)
+            image = p1img2 if direction == "right" else p1img4
+        screen.blit(image, centered_position)
 
 
 # Main loop
@@ -153,10 +163,7 @@ while running:
             rect = pygame.Rect(x, y, cell_size, cell_size)
             pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
 
-    # Draw the players
-
-        #pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
-
+    # Draw the players and resources
     draw_resources()
     draw_players()
 
