@@ -18,13 +18,13 @@ grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
 #Import food and water images
 image1= pygame.image.load('Pictures/food.png')
-image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
+image1 = pygame.transform.scale(image1,(int(cell_size*0.5),int(cell_size*0.5)))
 image2= pygame.image.load('Pictures/food2.png')
-image2 = pygame.transform.scale(image2,(int(cell_size*0.8),int(cell_size*0.8)))
+image2 = pygame.transform.scale(image2,(int(cell_size*0.5),int(cell_size*0.5)))
 image3=pygame.image.load('Pictures/food3.png')
-image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
+image3 = pygame.transform.scale(image3,(int(cell_size*0.5),int(cell_size*0.5)))
 image4 = pygame.image.load('Pictures/water.png')
-image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+image4 = pygame.transform.scale(image4,(int(cell_size*0.5),int(cell_size*0.5)))
 
 #Import players images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
@@ -138,11 +138,19 @@ while running:
     current_time = time.time()
     if current_time - last_time >= 1:
         game_instance.increment_time()
-        for player in game_instance.get_players():
-            move_player_to_resource(player,player.get_best_resource(resources))
-            #move_player_randomly(player)
+        #for player in game_instance.get_players():
+        #    move_player_to_resource(player,player.get_best_resource(resources))
+        #    #move_player_randomly(player)
+        #draw_resources()
+        #last_time = current_time
+        if game_instance.get_time() % 2 == 0:
+            move_player_to_resource(players[0], players[0].get_best_resource(resources))
+        else:
+            move_player_to_resource(players[1], players[1].get_best_resource(resources))
         draw_resources()
         last_time = current_time
+
+
 
     # Fill the screen with white color
     screen.fill((255, 255, 255))
@@ -152,7 +160,7 @@ while running:
         for y in range(0, window_size, cell_size):
             rect = pygame.Rect(x, y, cell_size, cell_size)
             pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
-
+#
     # Draw the players
 
         #pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
