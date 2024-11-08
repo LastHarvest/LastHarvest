@@ -12,6 +12,7 @@ class Game:
         # Accessors (Getters)
         # Accessors (Getters)
 
+##GETTERS
     def get_id(self) -> int:
         return self.__id
 
@@ -27,8 +28,7 @@ class Game:
     def get_resources(self) -> list:
         return self.__resources
 
-        # Modifiers (Setters)
-
+##SETTERS
     def set_id(self, id: int):
         self.__id = id
 
@@ -44,6 +44,6 @@ class Game:
     def set_resources(self, resources: list[Resource]):
         self.__resources = resources
 
+##ADDERS
     def increment_time(self):
         self.__time += 1
-
