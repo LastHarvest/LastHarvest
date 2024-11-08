@@ -18,15 +18,15 @@ grid_size = 7  # 7x7 grid
 cell_size = window_size // grid_size  # Size of each cell in the grid
 #Import food and water images
 image1= pygame.image.load('Pictures/food.png')
-image1 = pygame.transform.scale(image1,(int(cell_size*0.8),int(cell_size*0.8)))
+image1 = pygame.transform.scale(image1,(int(cell_size*0.5),int(cell_size*0.5)))
 image2= pygame.image.load('Pictures/food2.png')
-image2 = pygame.transform.scale(image2,(int(cell_size*0.8),int(cell_size*0.8)))
+image2 = pygame.transform.scale(image2,(int(cell_size*0.5),int(cell_size*0.5)))
 image3=pygame.image.load('Pictures/food3.png')
-image3 = pygame.transform.scale(image3,(int(cell_size*0.8),int(cell_size*0.8)))
+image3 = pygame.transform.scale(image3,(int(cell_size*0.5),int(cell_size*0.5)))
 image4 = pygame.image.load('Pictures/water.png')
-image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+image4 = pygame.transform.scale(image4,(int(cell_size*0.5),int(cell_size*0.5)))
 
-#Import player 1 images
+#Import players images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
 p1img1 = pygame.transform.scale(p1img1,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img2=pygame.image.load('Pictures/P1Run2.png')
@@ -35,8 +35,6 @@ p1img3=pygame.image.load('Pictures/P1Run3.png')
 p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img4 = pygame.image.load('Pictures/P1Run4.png')
 p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
-
-
 
 
 screen = pygame.display.set_mode((window_size, window_size))
@@ -116,7 +114,6 @@ def draw_players():
     """Draw the players on the grid."""
     for player in game_instance.get_players():
         direction=player.get_direction()
-
         player_pos = player.get_pos()
 
         # Position in pixels for the cell's top-left corner
@@ -148,9 +145,15 @@ while running:
     current_time = time.time()
     if current_time - last_time >= 1:
         game_instance.increment_time()
-        for player in game_instance.get_players():
-            move_player_to_resource(player,player.get_best_resource(resources))
-            #move_player_randomly(player)
+        #for player in game_instance.get_players():
+        #    move_player_to_resource(player,player.get_best_resource(resources))
+        #    #move_player_randomly(player)
+        #draw_resources()
+        #last_time = current_time
+        if game_instance.get_time() % 2 == 0:
+            move_player_to_resource(players[0], players[0].get_best_resource(resources))
+        else:
+            move_player_to_resource(players[1], players[1].get_best_resource(resources))
         draw_resources()
         last_time = current_time
 
