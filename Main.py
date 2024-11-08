@@ -107,6 +107,13 @@ def tuer(p1,p2):
         if p2.get_pos() in tab:
             p2.update_vivant(False)
 
+def draw_player_points():
+    """Draw the players' points on the screen."""
+    y_offset = 40
+    for player in game_instance.get_players():
+        points_text = font.render(f"{player.name} Points: {player.get_points()}", True, (0, 0, 0))
+        screen.blit(points_text, (10, y_offset))
+        y_offset += 30
 
 def draw_resources():
     """Draw the resources on the grid."""
