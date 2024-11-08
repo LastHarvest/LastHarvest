@@ -25,6 +25,9 @@ image3=pygame.image.load('Pictures/food3.png')
 image3 = pygame.transform.scale(image3,(int(cell_size*0.5),int(cell_size*0.5)))
 image4 = pygame.image.load('Pictures/water.png')
 image4 = pygame.transform.scale(image4,(int(cell_size*0.5),int(cell_size*0.5)))
+image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+arme = pygame.image.load('Arme.png')
+arme = pygame.transform.scale(arme,(int(cell_size*0.8),int(cell_size*0.8)))
 
 #Import players images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
@@ -45,6 +48,7 @@ players = [Player1(1, "Player1", (0, 0),"right"),
            Player2(2, "Player2", (6, 6),"left")]
 
 resources = [
+    Resource(0, 0, (3, 3), "Arme", 0,False),
     Resource(2, 9, (3, 4), "Food", 1,True),
     Resource(3, 30, (2, 1), "Hydration",2, True),
     Resource(4, 15, (0, 4), "Food", 2,True),
@@ -98,6 +102,50 @@ def move_player_to_resource(player, resource):
     check_for_resources(player)
 
 
+
+
+def add_ressources(nb):
+    tab = []
+    for ressources in resources:
+        if ressources.get_isFree():
+            tab.append(ressources.get_position())
+    x = random.randrange(0,7)
+    y = random.randrange(0,7)
+    while (x,y) in tab :
+        x = random.randrange(0,7)
+        y = random.randrange(0,7)
+    image = random.randrange(1,4)
+    val = random.randrange(9,20)
+    test = random.randrange(1,3)
+    if test == 1:
+        res = Resource(nb, val, (x, y), "Food", image,True)
+    else :
+        res = Resource(nb, val, (x, y), "Hydration", image,True)
+    resources.append(res)
+
+def nb_Libre():
+    cpt = 0
+    for ressources in resources :
+        if ressources.get_isFree() :
+            cpt+=1
+    return cpt
+
+def tuer(p1,p2):
+    if p1.arme==True and p2.get_vivant():
+        pos = p1.get_pos()
+        tab = [(pos[0]+1,pos[1]),(pos[0]+1,pos[1]+1),(pos[0]+1,pos[1]-1),(pos[0],pos[1]+1),(pos[0],pos[1]-1),(pos[0]-1,pos[1]-1),
+               (pos[0]-1,pos[1]),(pos[0]-1,pos[1]+1)]
+        if p2.get_pos() in tab:
+            p2.update_vivant(False)
+
+def draw_player_points():
+    """Draw the players' points on the screen."""
+    y_offset = 40
+    for player in game_instance.get_players():
+        points_text = font.render(f"{player.name} Points: {player.get_points()}", True, (0, 0, 0))
+        screen.blit(points_text, (10, y_offset))
+        y_offset += 30
+
 def draw_resources():
     """Draw the resources on the grid."""
     for resource in game_instance.get_resources():
@@ -129,6 +177,9 @@ def draw_players():
 # Main loop
 running = True
 last_time = time.time()
+nb_Resources = 6
+nb_ResourcesMax = 15
+PointArme=0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -148,7 +199,51 @@ while running:
         else:
             move_player_to_resource(players[1], players[1].get_best_resource(resources))
         draw_resources()
+
+        #Savoir qui peut avoir l'arme
+        play = game_instance.get_players()
+        if play[0].avoirArme() :
+            playArme = play[0]
+            playNotArme = play[1]
+        else :
+            playArme = play[1]
+            playNotArme = play[0]
+
+        # Détermination des actions des joueurs
+        if not(playArme.get_arme()) and playArme.get_points()>30:
+            resources[0].set_isFree2()
+            playArme.move_player_to_resource(resources[0])
+            check_for_resources(playArme)
+            if not(resources[0].get_isFree()):
+                playArme.setArme()
+            playNotArme.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(playNotArme)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+
+        elif playArme.get_arme():
+            playArme.move_player_to_player(playNotArme) # à ameliorer avec un for si on met plus de 2 players
+            tuer(playArme,playNotArme)
+            playNotArme.move_player_to_resource(player.get_best_resource(resources))
+            check_for_resources(playNotArme)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+
+        else :
+            for player in game_instance.get_players():
+                player.move_player_to_resource(player.get_best_resource(resources))
+                check_for_resources(player)
+            if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+                nb_Resources+=1
+                add_ressources(nb_Resources)
+            draw_resources()
+
         last_time = current_time
+
 
 
 
@@ -162,10 +257,13 @@ while running:
             pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
 #
     # Draw the players
-
-        #pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
+    for player in game_instance.get_players():
+        if player.get_vivant():
+            player_pos = player.get_pos()
+            pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
 
     draw_resources()
+    draw_player_points()
     draw_players()
 
     # Render the time text

@@ -1,6 +1,7 @@
 import Player
 import Resource
 
+
 class Game:
     def __init__(self, id: int, players: list[Player], resources: list[Resource]):
         self.__id = id

@@ -42,4 +42,7 @@ class Resource:
 
     def set_isFree(self ):
         self.__isFree = False
+    
+    def set_isFree2(self ):
+        self.__isFree = True
 

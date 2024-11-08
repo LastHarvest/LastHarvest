@@ -5,6 +5,9 @@ from abc import ABC, abstractmethod
 from pygame.mouse import get_pos
 
 
+
+
+
 class Player(ABC):
 
     def __init__(self,id,name,position,direction):
@@ -14,6 +17,8 @@ class Player(ABC):
         self.possession = []
         self.points = 0
         self.direction = direction
+        self.arme = False
+        self.vivant = True
 
     def get_points(self):
         """Return the current points of the agent."""
@@ -27,12 +32,16 @@ class Player(ABC):
         """Add points to the agent's total."""
         self.points += points
 
+    def setArme(self):
+        self.arme = True
 
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
         if resource not in self.possession:
             self.possession.append(resource)
 
+    def get_points(self):
+        return self.points
 
     def get_pos(self):
         """Return the current position of the agent."""
@@ -41,6 +50,18 @@ class Player(ABC):
     def update_pos(self, new_position):
         """Update the agent's position."""
         self.position = new_position
+
+    def get_arme(self):
+        return self.arme
+
+    def update_arme(self,state):
+        self.arme = state
+
+    def get_vivant(self):
+        return self.vivant
+
+    def update_vivant(self,etat):
+        self.vivant = etat
 
     def get_possession(self):
         """Return the list of resources in possession."""
@@ -92,6 +113,10 @@ class Player(ABC):
         if resource.get_isFree() and self.get_pos() == resource.get_position():
             resource.set_isFree()
             self.add_possession(resource)
+            self.set_points()
+        if resource.get_type == "Arme":
+            self.arme=True
+
 
 
 
