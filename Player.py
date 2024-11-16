@@ -1,11 +1,7 @@
-
 import math
 from abc import ABC, abstractmethod
 
 from pygame.mouse import get_pos
-
-
-
 
 
 class Player(ABC):
@@ -28,12 +24,16 @@ class Player(ABC):
     def set_points(self):
         pass
 
+    def check_for_resource(self, resources):
+        for r in resources:
+            self.collect_resource(r)
+
+
+
+
     def add_points(self, points):
         """Add points to the agent's total."""
         self.points += points
-
-    def setArme(self):
-        self.arme = True
 
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
@@ -51,17 +51,11 @@ class Player(ABC):
         """Update the agent's position."""
         self.position = new_position
 
-    def get_arme(self):
+    def has_arme(self):
         return self.arme
-
-    def update_arme(self,state):
-        self.arme = state
 
     def get_vivant(self):
         return self.vivant
-
-    def update_vivant(self,etat):
-        self.vivant = etat
 
     def get_possession(self):
         """Return the list of resources in possession."""
@@ -109,15 +103,22 @@ class Player(ABC):
 
 
     def collect_resource(self, resource):
-        """Collect the resource if the player moves to its position."""
+        """Collect the resource if the player moves to its position.
+        If the resource is a weapon then it sets weapon has true to be able to kill the other player
+        """
+
         if resource.get_isFree() and self.get_pos() == resource.get_position():
-            resource.set_isFree()
+            resource.set_Free()
             self.add_possession(resource)
             self.set_points()
+
         if resource.get_type == "Arme":
-            self.arme=True
+            self.arme = True
 
 
+
+    def get_arme(self):
+        return self.arme
 
 
     def move_up(self):

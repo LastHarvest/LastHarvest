@@ -35,7 +35,6 @@ class Player1(Player):
         elif p[1] > r[1]:
             self.move_down()
 
-    def avoirArme(self):
-        return True
+
 
 

@@ -40,7 +40,7 @@ class Resource:
     def set_type(self, type: str):
         self.__type = type
 
-    def set_isFree(self ):
+    def set_Free(self ):
         self.__isFree = False
     
     def set_isFree2(self ):
