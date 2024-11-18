@@ -1,7 +1,11 @@
 import pygame
 import sys
 import time
+import random
 from Game import Game
+from Player1 import Player1
+from Player2 import Player2
+from Resource import Resource
 
 
 
