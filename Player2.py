@@ -12,7 +12,7 @@ class Player2(Player):
             sum+=r.get_value()
         self.points = sum*2
 
-    def move_player_to_resource(self, resource):
+    def move_player_to_resource(self, resource, res):
         p = self.get_pos()
         r = resource.get_position()
         if p[0] < r[0]:
@@ -24,6 +24,25 @@ class Player2(Player):
                 self.move_up()
             elif p[1] > r[1]:
                 self.move_down()
+        print(res)
+        self.check_for_resource(res)
+
+    def move_player_to_player(self, player2):
+        p = self.get_pos()
+        pp = player2.get_pos()
+
+        if (p[0] == pp[0]) and p[1] == pp[1]: return self.tuer(player2)
+
+        if p[0] < pp[0]:
+            self.move_right()
+        elif p[0] > pp[0]:
+            self.move_left()
+        else:
+            if p[1] < pp[1]:
+                self.move_up()
+            elif p[1] > pp[1]:
+                self.move_down()
+        return 0
 
     def avoirArme(self):
         return False

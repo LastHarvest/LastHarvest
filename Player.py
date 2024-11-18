@@ -3,6 +3,8 @@ from abc import ABC, abstractmethod
 
 from pygame.mouse import get_pos
 
+from Disponibility import TRUE, FALSE, APPEARED
+
 
 class Player(ABC):
 
@@ -27,8 +29,6 @@ class Player(ABC):
     def check_for_resource(self, resources):
         for r in resources:
             self.collect_resource(r)
-
-
 
 
     def add_points(self, points):
@@ -84,7 +84,17 @@ class Player(ABC):
 
         return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
 
-
+    def move_player_to_player(self,player2):
+        p = self.get_pos()
+        r = player2.get_pos()
+        if p[0] < r[0]:
+            self.move_right()
+        elif p[0] > r[0]:
+            self.move_left()
+        if p[1] < r[1]:
+            self.move_up()
+        elif p[1] > r[1]:
+            self.move_down()
 
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
@@ -97,24 +107,25 @@ class Player(ABC):
         """Return the best resource based on the choice formula"""
         maxi=(0,0)
         for r in resources:
-             if r.get_isFree() and self.choice_formula(r)>maxi[1]:
-                 maxi=(r,self.choice_formula(r))
-        return maxi[0]
+            if (r.get_isFree() == True) and self.choice_formula(r)>maxi[1]:
+                maxi=(r,self.choice_formula(r))
+        return maxi[0] #r[0] resource, r[1] formula value
 
 
     def collect_resource(self, resource):
         """Collect the resource if the player moves to its position.
         If the resource is a weapon then it sets weapon has true to be able to kill the other player
         """
+        val = resource.get_isFree() and self.get_pos() == resource.get_position()
+        if val and resource.get_type() == "Arme":
+            resource.set_Apperead()
+            self.arme = True
+            print(resource.get_isFree())
 
-        if resource.get_isFree() and self.get_pos() == resource.get_position():
+        elif val:
             resource.set_Free()
             self.add_possession(resource)
             self.set_points()
-
-        if resource.get_type == "Arme":
-            self.arme = True
-
 
 
     def get_arme(self):
@@ -139,4 +150,7 @@ class Player(ABC):
             self.position = (self.position[0] + 1, self.position[1])
             self.direction="right"
 
-
+    def tuer(self, player2):
+        if (player2.get_vivant()):
+            player2.vivant = False
+        return 404

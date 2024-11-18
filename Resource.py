@@ -1,5 +1,8 @@
+from Disponibility import TRUE, FALSE, APPEARED, Disponibility
+
+
 class Resource:
-    def __init__(self, id: int, value: int, position: tuple, type: str, item: int, isFree: bool):
+    def __init__(self, id: int, value: int, position: tuple, type: str, item: int, isFree: Disponibility):
         self.__id = id
         self.__value = value
         self.__position = position
@@ -21,7 +24,8 @@ class Resource:
         return self.__type
 
     def get_isFree(self) -> bool:
-        return self.__isFree
+        if self.__isFree == TRUE: return True
+        else : return False
 
     def get_item(self):
         return self.__item
@@ -41,8 +45,13 @@ class Resource:
         self.__type = type
 
     def set_Free(self ):
-        self.__isFree = False
+        self.__isFree = FALSE
     
-    def set_isFree2(self ):
-        self.__isFree = True
+    def set_True(self ):
+        self.__isFree = TRUE
 
+    def set_Apperead(self ):
+        self.__isFree = APPEARED
+
+    def has_Appeared(self):
+        return self.__isFree == APPEARED
