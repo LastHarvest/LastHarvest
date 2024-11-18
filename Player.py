@@ -15,6 +15,9 @@ class Player(ABC):
         self.points = 0
         self.direction = direction
 
+    def get_id(self):
+        return self.id
+
     def get_points(self):
         """Return the current points of the agent."""
         return self.points
