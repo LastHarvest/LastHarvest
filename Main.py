@@ -35,6 +35,9 @@ p1img3=pygame.image.load('Pictures/P1Run3.png')
 p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img4 = pygame.image.load('Pictures/P1Run4.png')
 p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
+
+#Import player 2 images
+
 p2img1=pygame.image.load('Pictures/P2Run1.png')
 p2img1 = pygame.transform.scale(p2img1,(int(cell_size*1.3),int(cell_size*1.3)))
 p2img2=pygame.image.load('Pictures/P2Run2.png')
@@ -169,6 +172,12 @@ while game_instance.get_running():
     draw_player_points()
     draw_players()
 
+
+    # Render the time text
+    time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
+    screen.blit(time_text, (10, 10))
+
+    # Update the display
     pygame.display.flip()
 
 
