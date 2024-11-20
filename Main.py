@@ -27,6 +27,7 @@ image4 = pygame.transform.scale(image4,(int(cell_size*0.6),int(cell_size*0.6)))
 arme = pygame.image.load('Pictures/Arme.png')
 arme = pygame.transform.scale(arme,(int(cell_size*0.7),int(cell_size*0.7)))
 
+#Import player 1 images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
 p1img1 = pygame.transform.scale(p1img1,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img2=pygame.image.load('Pictures/P1Run2.png')

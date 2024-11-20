@@ -14,8 +14,8 @@ class Game:
         self.__nbResources = 7
         self.__winner = -1
         self.__time = 0
-        self.__players = [Player1(1, "Player1", (0, 0),"right"),
-                            Player2(2, "Player2", (6, 6),"left")]
+        self.__players =  [Player1(1, "Player1", (0, 0),"right"),
+           Player2(2, "Player2", (6, 6),"left")]
         self.__resources = [
                             Resource(0, 0, (3, 3), "Arme", 0,FALSE),
                             Resource(2, 9, (3, 4), "Food", 1,TRUE),
