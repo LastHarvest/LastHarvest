@@ -34,7 +34,7 @@ class Game:
         players = self.__players
         resources = self.__resources
         tab = []
-        tab.append((4, 4))
+        tab.append((3, 3))
         for r in resources:
             if r.is_notTaken():
                 tab.append(r.get_position())
