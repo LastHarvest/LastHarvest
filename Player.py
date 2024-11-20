@@ -1,3 +1,4 @@
+
 import math
 from abc import ABC, abstractmethod
 
@@ -16,9 +17,10 @@ class Player(ABC):
         self.possession = []
         self.points = 0
         self.direction = direction
-        self.arme = False
-        self.vivant = True
 
+    def get_points(self):
+        """Return the current points of the agent."""
+        return self.points
 
     @abstractmethod
     def set_points(self):
@@ -38,6 +40,7 @@ class Player(ABC):
     def add_points(self, points):
         """Add points to the agent's total."""
         self.points += points
+
 
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
@@ -87,6 +90,7 @@ class Player(ABC):
         pos_resource = resource.get_position()
 
         return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
+
 
 
     def choice_formula(self, resource):

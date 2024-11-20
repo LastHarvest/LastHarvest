@@ -1,10 +1,15 @@
 import pygame
 import sys
 import time
+import random
 from Game import Game
+from Player1 import Player1
+from Player2 import Player2
+from Resource import Resource
 
 
 
+# Initialize pygame
 pygame.init()
 
 window_size = 700
@@ -32,7 +37,20 @@ p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img4 = pygame.image.load('Pictures/P1Run4.png')
 p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
 
+#Import player 2 images
 
+p2img1=pygame.image.load('Pictures/P2Run1.png')
+p2img1 = pygame.transform.scale(p2img1,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img2=pygame.image.load('Pictures/P2Run2.png')
+p2img2 = pygame.transform.scale(p2img2,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img3=pygame.image.load('Pictures/P2Run3.png')
+p2img3 = pygame.transform.scale(p2img3,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img4 = pygame.image.load('Pictures/P2Run4.png')
+p2img4 = pygame.transform.scale(p2img4,(int(cell_size*1.3),int(cell_size*1.3)))
+
+
+background=pygame.image.load('Pictures/grassbackground.jpg')
+background_image = pygame.transform.scale(background, (window_size, window_size))
 screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
 
@@ -67,15 +85,29 @@ def draw_players():
     for player in game_instance.get_players():
         direction=player.get_direction()
         player_pos = player.get_pos()
-        pixel_pos=(player_pos[0]*cell_size, player_pos[1]*cell_size)
-        if player_pos[0]%2==0:
-            if direction=="right":
-                screen.blit(p1img1, pixel_pos)
-            else: screen.blit(p1img3, pixel_pos)
+
+        # Position in pixels for the cell's top-left corner
+        cell_top_left = (player_pos[0] * cell_size, player_pos[1] * cell_size)
+
+        # Calculate the size and offset for centering
+        image_size = int(cell_size * 1.3)
+        offset = (image_size - cell_size) // 2
+
+    # Adjust position to center the image
+        centered_position = (cell_top_left[0] - offset, cell_top_left[1] - offset)
+
+        if player.get_id()==1:
+            if player_pos[0]%2==0:
+                image = p1img1 if direction == "right" else p1img3
+            else:
+                image = p1img2 if direction == "right" else p1img4
+            screen.blit(image, centered_position)
         else:
-            if direction=="right":
-                screen.blit(p1img2, pixel_pos)
-            else: screen.blit(p1img4, pixel_pos)
+            if player_pos[0]%2==0:
+                image = p2img1 if direction == "right" else p2img3
+            else:
+                image = p2img2 if direction == "right" else p2img4
+            screen.blit(image, centered_position)
 
 
 
@@ -103,12 +135,19 @@ while game_instance.get_running():
     for x in range(0, window_size, cell_size):
         for y in range(0, window_size, cell_size):
             rect = pygame.Rect(x, y, cell_size, cell_size)
-            pygame.draw.rect(screen, (0, 0, 0), rect, 1)
+            pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
+
 
     draw_resources()
     draw_player_points()
     draw_players()
 
+
+    # Render the time text
+    time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
+    screen.blit(time_text, (10, 10))
+
+    # Update the display
     pygame.display.flip()
 
 
