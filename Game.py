@@ -9,8 +9,8 @@ from Player2 import Player2
 class Game:
     def __init__(self):
         self.__running = True
-        self.__nbResMax = 11
-        self.__nbResources = 6
+        self.__nbResMax = 14
+        self.__nbResources = 7
         self.__winner = -1
         self.__time = 0
         self.__players = [Player1(1, "Player1", (0, 0),"right"),
@@ -64,12 +64,15 @@ class Game:
         players = self.__players
         resources = self.__resources
 
+        if self.all_Taken():
+            self.__running = False
+
         if players[i].has_arme():
-            end = players[i].move_player_to_player(players[abs(i - 1)])
+            players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
                 self.__running = False
 
-        elif players[abs(i - 1)].has_arme():
+        elif players[abs(i - 1)].has_arme() and players[abs(i-1)].is_Next(players[i]):
             players[i].fuite(players[abs(i - 1)])
 
         elif players[i].get_points() >= 50 and resources[0].is_notTaken():
@@ -78,7 +81,7 @@ class Game:
         else :
             players[i].move_player_to_resource(players[i].get_best_resource(resources), resources)
 
-        if self.nb_Libre() < 8 and self.__nbResources < self.__nbResMax:
+        if self.nb_Libre() < 10 and self.__nbResources < self.__nbResMax:
             self.add_nbResources()
             self.add_ressources()
 
@@ -87,7 +90,12 @@ class Game:
     def nb_Libre(self):
         return sum(1 for r in self.__resources if r.is_notTaken())
 
-
+    def all_Taken(self):
+        tf = True
+        for r in self.__resources:
+            if r.is_notTaken():
+                tf = False
+        return tf
 #GETTER
 
     def get_winner(self) -> int:

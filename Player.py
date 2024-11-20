@@ -1,11 +1,5 @@
-
 import math
 from abc import ABC, abstractmethod
-
-from pygame.mouse import get_pos
-from usbcreator.backends.base.backend import abstract
-
-from Disponibility import TRUE, FALSE, APPEARED
 
 
 class Player(ABC):
@@ -148,18 +142,28 @@ class Player(ABC):
     def accelerate_up(self):
         self.move_up()
         self.move_up()
+        self.move_up()
+
 
     def accelerate_down(self):
         self.move_down()
         self.move_down()
+        self.move_down()
+
 
     def accelerate_right(self):
         self.move_right()
         self.move_right()
+        self.move_right()
+
 
     def accelerate_left(self):
         self.move_left()
         self.move_left()
+        self.move_left()
+
+    def is_Next(self, pp):
+        return (self.get_pos()[0] == pp.get_pos()[0]) or (self.get_pos()[1] == pp.get_pos()[1]) or (self.get_pos()[0] == pp.get_pos()[0]+1) or (self.get_pos()[1] == pp.get_pos()[1]+1)
 
     # def tuer(self, player2):
     #     if (player2.get_vivant()): player2.vivant = False

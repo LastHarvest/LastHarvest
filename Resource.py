@@ -27,8 +27,12 @@ class Resource:
         if self.__isFree == TRUE: return True
         else : return False
 
+    def took(self):
+        return self.__isFree == FALSE or self.__isFree == APPEARED
+
     def get_item(self):
         return self.__item
+
 
 
 ##SETTERS

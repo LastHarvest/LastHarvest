@@ -137,6 +137,7 @@ while game_instance.get_running():
             rect = pygame.Rect(x, y, cell_size, cell_size)
             pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Draw the cell border
 
+    screen.blit(background, (0, 0))
 
     draw_resources()
     draw_player_points()
