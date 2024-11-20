@@ -27,6 +27,9 @@ class Player(ABC):
     def setArme(self):
         self.arme = True
 
+    def setPos(self,x,y):
+        self.position = (x,y)
+
     def add_possession(self, resource):
         """Add a resource to the agent's possession."""
         if resource not in self.possession:

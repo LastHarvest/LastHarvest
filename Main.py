@@ -107,6 +107,20 @@ def tuer(p1,p2):
         if p2.get_pos() in tab:
             p2.update_vivant(False)
 
+def teleport(p1,p2,teleportVar):
+    pos = p1.get_pos()
+    tab = [(pos[0]+1,pos[1]),(pos[0]+1,pos[1]+1),(pos[0]+1,pos[1]-1),(pos[0]-1,pos[1]-1),(pos[0]-1,pos[1]),(pos[0]-1,pos[1]+1),
+            (pos[0]+2,pos[1]),(pos[0]+2,pos[1]+2),(pos[0]+2,pos[1]-2),(pos[0]-2,pos[1]-2),(pos[0]-2,pos[1]),(pos[0]-2,pos[1]+2)]
+    if teleportVar == 3 and p2.get_pos() in tab:
+        x = random.randrange(0,7)
+        y = random.randrange(0,7)
+        p1.setPos(x,y)
+    else :
+        if teleportVar<3:
+            teleportVar += 1
+    return teleportVar
+
+
 def draw_player_points():
     """Draw the players' points on the screen."""
     y_offset = 40
@@ -137,6 +151,7 @@ last_time = time.time()
 nb_Resources = 6
 nb_ResourcesMax = 15
 PointArme=0
+teleportVar = 3
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -172,6 +187,7 @@ while running:
         
         elif playArme.get_arme():
             playArme.move_player_to_player(playNotArme) # à ameliorer avec un for si on met plus de 2 players
+            teleportVar = teleport(playNotArme,playArme,teleportVar)
             tuer(playArme,playNotArme)
             playNotArme.move_player_to_resource(player.get_best_resource(resources))
             check_for_resources(playNotArme)
