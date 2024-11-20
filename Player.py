@@ -2,6 +2,7 @@ import math
 from abc import ABC, abstractmethod
 
 from pygame.mouse import get_pos
+from usbcreator.backends.base.backend import abstract
 
 from Disponibility import TRUE, FALSE, APPEARED
 
@@ -18,13 +19,16 @@ class Player(ABC):
         self.arme = False
         self.vivant = True
 
-    def get_points(self):
-        """Return the current points of the agent."""
-        return self.points
 
     @abstractmethod
     def set_points(self):
         pass
+
+    @abstractmethod
+    def move_player_to_player(self, player2):
+        pass
+
+
 
     def check_for_resource(self, resources):
         for r in resources:
@@ -84,17 +88,6 @@ class Player(ABC):
 
         return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
 
-    def move_player_to_player(self,player2):
-        p = self.get_pos()
-        r = player2.get_pos()
-        if p[0] < r[0]:
-            self.move_right()
-        elif p[0] > r[0]:
-            self.move_left()
-        if p[1] < r[1]:
-            self.move_up()
-        elif p[1] > r[1]:
-            self.move_down()
 
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
@@ -102,6 +95,7 @@ class Player(ABC):
             return (resource.get_value()*self.get_amount_food())/(self.get_distance_resource(resource)+1)
         else:
             return (resource.get_value()*self.get_amount_hydration())/(self.get_distance_resource(resource)+1)
+
 
     def get_best_resource(self, resources):
         """Return the best resource based on the choice formula"""
@@ -116,7 +110,6 @@ class Player(ABC):
         """Collect the resource if the player moves to its position.
         If the resource is a weapon then it sets weapon has true to be able to kill the other player
         """
-
         val = resource.is_notTaken() and self.get_pos() == resource.get_position()
         if val and resource.get_type() == "Arme":
             resource.set_Appeared()
@@ -133,23 +126,35 @@ class Player(ABC):
 
 
     def move_up(self):
-        if self.position[1] < 6:
             self.position = (self.position[0], self.position[1] + 1)
 
     def move_down(self):
-        if self.position[1] > 0 :
-            self.position = (self.position[0], self.position[1] - 1)
+        self.position = (self.position[0], self.position[1] - 1)
 
     def move_left(self):
-        if self.position[0] > 0:
-            self.position = (self.position[0] - 1, self.position[1])
-            self.direction="left"
+        self.position = (self.position[0] - 1, self.position[1])
+        self.direction="left"
 
     def move_right(self):
-        if self.position[0] < 6:
-            self.position = (self.position[0] + 1, self.position[1])
-            self.direction="right"
+        self.position = (self.position[0] + 1, self.position[1])
+        self.direction="right"
 
-    def tuer(self, player2):
-        if (player2.get_vivant()): player2.vivant = False
-        return 404
+    def accelerate_up(self):
+        self.move_up()
+        self.move_up()
+
+    def accelerate_down(self):
+        self.move_down()
+        self.move_down()
+
+    def accelerate_right(self):
+        self.move_right()
+        self.move_right()
+
+    def accelerate_left(self):
+        self.move_left()
+        self.move_left()
+
+    # def tuer(self, player2):
+    #     if (player2.get_vivant()): player2.vivant = False
+    #     return 404

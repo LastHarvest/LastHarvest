@@ -33,7 +33,7 @@ class Game:
         players = self.__players
         resources = self.__resources
         tab = []
-        tab.append((4, 4))
+        tab.append((3, 3))
         for r in resources:
             if r.is_notTaken():
                 tab.append(r.get_position())
@@ -67,8 +67,12 @@ class Game:
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
                 self.__running = False
 
-        elif players[i].get_points() >= 30 and resources[0].is_notTaken():
+        elif players[abs(i - 1)].has_arme():
+            players[i].fuite(players[abs(i - 1)])
+
+        elif players[i].get_points() >= 50 and resources[0].is_notTaken():
             players[i].move_player_to_resource(resources[0], resources)
+
         else :
             players[i].move_player_to_resource(players[i].get_best_resource(resources), resources)
 
@@ -107,6 +111,8 @@ class Game:
 
     def get_running(self):
         return self.__running
+
+
 ##SETTERS
     def set_id(self, id: int):
         self.__id = id
