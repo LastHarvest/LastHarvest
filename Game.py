@@ -58,6 +58,8 @@ class Game:
             res = Resource(self.get_resourcesLength(), val, (x, y), "Hydration", image, TRUE)
             resources.append(res)
 
+
+
     def action(self):
         i = self.__time % 2
         players = self.__players
