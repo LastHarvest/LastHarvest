@@ -107,7 +107,7 @@ class Player(ABC):
         """Return the best resource based on the choice formula"""
         maxi=(0,0)
         for r in resources:
-            if (r.get_isFree() == True) and self.choice_formula(r)>maxi[1]:
+            if (r.is_notTaken() == True) and self.choice_formula(r)>maxi[1]:
                 maxi=(r,self.choice_formula(r))
         return maxi[0] #r[0] resource, r[1] formula value
 
@@ -116,14 +116,14 @@ class Player(ABC):
         """Collect the resource if the player moves to its position.
         If the resource is a weapon then it sets weapon has true to be able to kill the other player
         """
-        val = resource.get_isFree() and self.get_pos() == resource.get_position()
+
+        val = resource.is_notTaken() and self.get_pos() == resource.get_position()
         if val and resource.get_type() == "Arme":
-            resource.set_Apperead()
+            resource.set_Appeared()
             self.arme = True
-            print(resource.get_isFree())
 
         elif val:
-            resource.set_Free()
+            resource.set_Taken()
             self.add_possession(resource)
             self.set_points()
 
@@ -151,6 +151,5 @@ class Player(ABC):
             self.direction="right"
 
     def tuer(self, player2):
-        if (player2.get_vivant()):
-            player2.vivant = False
+        if (player2.get_vivant()): player2.vivant = False
         return 404

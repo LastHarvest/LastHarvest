@@ -23,7 +23,7 @@ class Resource:
     def get_type(self) -> str:
         return self.__type
 
-    def get_isFree(self) -> bool:
+    def is_notTaken(self) -> bool:
         if self.__isFree == TRUE: return True
         else : return False
 
@@ -44,13 +44,13 @@ class Resource:
     def set_type(self, type: str):
         self.__type = type
 
-    def set_Free(self ):
+    def set_Taken(self ):
         self.__isFree = FALSE
     
     def set_True(self ):
         self.__isFree = TRUE
 
-    def set_Apperead(self ):
+    def set_Appeared(self ):
         self.__isFree = APPEARED
 
     def has_Appeared(self):

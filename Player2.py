@@ -31,7 +31,7 @@ class Player2(Player):
         p = self.get_pos()
         pp = player2.get_pos()
 
-        if (p[0] == pp[0]) and p[1] == pp[1]: return self.tuer(player2)
+        if (p[0] == pp[0]) and p[1] == pp[1]: return 404
 
         if p[0] < pp[0]:
             self.move_right()

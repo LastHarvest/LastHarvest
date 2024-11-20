@@ -27,7 +27,7 @@ class Player1(Player):
     def move_player_to_player(self, player2):
         p = self.get_pos()
         pp = player2.get_pos()
-        if (p[0] == pp[0]) and p[1] == pp[1]: return self.tuer(player2)
+        if (p[0] == pp[0]) and p[1] == pp[1]: return 404
 
         if p[0] < pp[0]:
             self.move_right()
@@ -39,7 +39,6 @@ class Player1(Player):
                 self.move_down()
 
         return 0
-
 
 
 
