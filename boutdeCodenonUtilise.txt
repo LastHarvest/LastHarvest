@@ -1,0 +1,103 @@
+
+        #Savoir qui peut avoir l'arme
+        # if players[0].has_arme() :
+        #     playArme = players[0]
+        #     playNotArme = players[1]
+        # else :
+        #     playArme = players[1]
+        #     playNotArme = players[0]
+
+        # Détermination des actions des joueurs
+        # if not(playArme.has_arme()) and playArme.get_points()>30:
+        #     resources[0].set_Free()
+        #     playArme.move_player_to_resource(resources[0])
+        #     playArme.check_for_resource(resources)
+        #     if not(resources[0].get_isFree()):
+        #         playArme.setArme()
+        #     playNotArme.move_player_to_resource(player.get_best_resource(resources))
+        #     playNotArme.check_for_resource(resources)
+        #     if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+        #         nb_Resources+=1
+        #         add_ressources(nb_Resources)
+        #     draw_resources()
+
+        # elif playArme.has_arme():
+        #     playArme.move_player_to_player(playNotArme) # à ameliorer avec un for si on met plus de 2 players
+        #     tuer(playArme,playNotArme)
+        #     playNotArme.move_player_to_resource(player.get_best_resource(resources))
+        #     playNotArme.check_for_resource(resources)
+        #     if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+        #         nb_Resources+=1
+        #         add_ressources(nb_Resources)
+        #     draw_resources()
+        #
+        # else :
+        #     for player in game_instance.get_players():
+        #         player.move_player_to_resource(player.get_best_resource(resources))
+        #     player.check_for_resource(resources)
+        #     if nb_Libre()<7 and nb_Resources<nb_ResourcesMax:
+        #         nb_Resources+=1
+        #         add_ressources(nb_Resources)
+        #     draw_resources()
+
+
+
+
+    # Draw the players
+    # for player in game_instance.get_players():
+    #     if player.get_vivant():
+    #         player_pos = player.get_pos()
+            #pygame.draw.circle(screen, (0, 0, 255), (player_pos[0] * cell_size + cell_size // 2, player_pos[1] * cell_size + cell_size // 2), cell_size // 3)
+
+
+
+
+#à quoi sert cette fonction ?
+# def tuer(p1,p2):
+#     if p1.get_arme() and p2.get_vivant():
+#         pos = p1.get_pos()
+#
+#         tab = [(pos[0]+1,pos[1]),(pos[0]+1,pos[1]+1),(pos[0]+1,pos[1]-1),(pos[0],pos[1]+1),(pos[0],pos[1]-1),(pos[0]-1,pos[1]-1),
+#                (pos[0]-1,pos[1]),(pos[0]-1,pos[1]+1)]
+#
+#         if p2.get_pos() in tab:
+#             p2.update_vivant(False)
+
+
+
+
+
+
+
+
+#Move to player class check_for_ressources(player)
+# def check_for_resources(player):
+#     for resource in game_instance.get_resources():
+#         player.collect_resource(resource)
+
+
+# def move_player_to_resource(player, resource):
+#     """moves the player to the given resource"""
+#     p = player.get_pos()
+#     r = resource.get_position()
+#     if p[0] < r[0]:
+#       player.move_right()
+#       draw_players()
+#     elif p[0] > r[0]:
+#        player.move_left()
+#        draw_players()
+#     else:
+#         if p[1] < r[1]:
+#            player.move_up()
+#         elif p[1] > r[1]:
+#            player.move_down()
+#
+#     player.check_for_resource(game_instance.get_resources())
+
+
+
+  # Render the time text
+    #time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
+    #screen.blit(time_text, (10, 10))
+
+

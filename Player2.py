@@ -15,34 +15,44 @@ class Player2(Player):
     def move_player_to_resource(self, resource, res):
         p = self.get_pos()
         r = resource.get_position()
-        if p[0] < r[0]:
+        if p[0] < r[0] and p[0] < 6:
             self.move_right()
-        elif p[0] > r[0]:
+        elif p[0] > r[0] and p[0] > 0:
             self.move_left()
         else:
-            if p[1] < r[1]:
+            if p[1] < r[1] and p[1] < 6:
                 self.move_up()
-            elif p[1] > r[1]:
+            elif p[1] > r[1] and p[1] > 0:
                 self.move_down()
-        print(res)
         self.check_for_resource(res)
 
     def move_player_to_player(self, player2):
         p = self.get_pos()
         pp = player2.get_pos()
-
         if (p[0] == pp[0]) and p[1] == pp[1]: return 404
 
-        if p[0] < pp[0]:
+        if p[0] < pp[0] and p[0] < 6:
             self.move_right()
-        elif p[0] > pp[0]:
+        elif p[0] > pp[0] and p[0] > 0:
             self.move_left()
         else:
-            if p[1] < pp[1]:
+            if p[1] < pp[1] and p[1] < 6:
                 self.move_up()
-            elif p[1] > pp[1]:
+            elif p[1] > pp[1] and p[1] > 0:
                 self.move_down()
         return 0
 
-    def avoirArme(self):
-        return False
+    def fuite(self, player2):
+        p = self.get_pos()
+        pp = player2.get_pos()
+
+        if p[0] < pp[0] - 1 and p[0] < 6:
+            self.move_left()
+        elif p[0] > pp[0] + 1 and p[0] > 0:
+            self.move_right()
+        else:
+            if p[1] < pp[1] - 1 and p[1] < 6:
+                self.move_down()
+            elif p[1] > pp[1] + 1 and p[1] > 0:
+                self.move_up()
+
