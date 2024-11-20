@@ -21,16 +21,15 @@ cell_size = window_size // grid_size  # Size of each cell in the grid
 
 #Import food and water images
 image1= pygame.image.load('Pictures/food.png')
-image1 = pygame.transform.scale(image1,(int(cell_size*0.5),int(cell_size*0.5)))
+image1 = pygame.transform.scale(image1,(int(cell_size*0.6),int(cell_size*0.6)))
 image2= pygame.image.load('Pictures/food2.png')
-image2 = pygame.transform.scale(image2,(int(cell_size*0.5),int(cell_size*0.5)))
+image2 = pygame.transform.scale(image2,(int(cell_size*0.6),int(cell_size*0.6)))
 image3=pygame.image.load('Pictures/food3.png')
-image3 = pygame.transform.scale(image3,(int(cell_size*0.5),int(cell_size*0.5)))
+image3 = pygame.transform.scale(image3,(int(cell_size*0.6),int(cell_size*0.6)))
 image4 = pygame.image.load('Pictures/water.png')
-image4 = pygame.transform.scale(image4,(int(cell_size*0.5),int(cell_size*0.5)))
-image4 = pygame.transform.scale(image4,(int(cell_size*0.8),int(cell_size*0.8)))
+image4 = pygame.transform.scale(image4,(int(cell_size*0.6),int(cell_size*0.6)))
 arme = pygame.image.load('Pictures/Arme.png')
-arme = pygame.transform.scale(arme,(int(cell_size*0.8),int(cell_size*0.8)))
+arme = pygame.transform.scale(arme,(int(cell_size*0.7),int(cell_size*0.7)))
 
 #Import players images
 p1img1=pygame.image.load('Pictures/P1Run1.png')
@@ -41,7 +40,33 @@ p1img3=pygame.image.load('Pictures/P1Run3.png')
 p1img3 = pygame.transform.scale(p1img3,(int(cell_size*1.3),int(cell_size*1.3)))
 p1img4 = pygame.image.load('Pictures/P1Run4.png')
 p1img4 = pygame.transform.scale(p1img4,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img1=pygame.image.load('Pictures/P2Run1.png')
+p2img1 = pygame.transform.scale(p2img1,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img2=pygame.image.load('Pictures/P2Run2.png')
+p2img2 = pygame.transform.scale(p2img2,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img3=pygame.image.load('Pictures/P2Run3.png')
+p2img3 = pygame.transform.scale(p2img3,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img4 = pygame.image.load('Pictures/P2Run4.png')
+p2img4 = pygame.transform.scale(p2img4,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img1W = pygame.image.load('Pictures/P1Run1W.png')
+p1img1W = pygame.transform.scale(p1img1W,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img2W = pygame.image.load('Pictures/P1Run2W.png')
+p1img2W = pygame.transform.scale(p1img2W,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img3W = pygame.image.load('Pictures/P1Run3W.png')
+p1img3W = pygame.transform.scale(p1img3W,(int(cell_size*1.3),int(cell_size*1.3)))
+p1img4W = pygame.image.load('Pictures/P1Run4W.png')
+p1img4W = pygame.transform.scale(p1img4W,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img1W = pygame.image.load('Pictures/P2Run1W.png')
+p2img1W = pygame.transform.scale(p2img1W,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img2W = pygame.image.load('Pictures/P2Run2W.png')
+p2img2W = pygame.transform.scale(p2img2W,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img3W = pygame.image.load('Pictures/P2Run3W.png')
+p2img3W = pygame.transform.scale(p2img3W,(int(cell_size*1.3),int(cell_size*1.3)))
+p2img4W = pygame.image.load('Pictures/P2Run4W.png')
+p2img4W = pygame.transform.scale(p2img4W,(int(cell_size*1.3),int(cell_size*1.3)))
 
+sprite = pygame.image.load('Pictures/bangsprite.png')
+sprite = pygame.transform.scale(sprite,(int(cell_size*1.5),int(cell_size*1.5)))
 
 screen = pygame.display.set_mode((window_size, window_size))
 pygame.display.set_caption('Game Time Display')
@@ -123,15 +148,45 @@ def draw_players():
     for player in game_instance.get_players():
         direction=player.get_direction()
         player_pos = player.get_pos()
-        pixel_pos=(player_pos[0]*cell_size, player_pos[1]*cell_size)
-        if player_pos[0]%2==0:
-            if direction=="right":
-                screen.blit(p1img1, pixel_pos)
-            else: screen.blit(p1img3, pixel_pos)
+
+        # Position in pixels for the cell's top-left corner
+        cell_top_left = (player_pos[0] * cell_size, player_pos[1] * cell_size)
+
+        # Calculate the size and offset for centering
+        image_size = int(cell_size * 1.3)
+        offset = (image_size - cell_size) // 2
+
+        # Adjust position to center the image
+        centered_position = (cell_top_left[0] - offset, cell_top_left[1] - offset)
+
+        if player.get_id()==1 and player.get_arme():
+            if player_pos[0]%2==0:
+                image = p1img1W if direction == "right" else p1img3W
+            else:
+                image = p1img2W if direction == "right" else p1img4W
+            screen.blit(image, centered_position)
+        elif player.get_id()==2 and player.get_arme():
+            if player_pos[0]%2==0:
+                image = p2img1W if direction == "right" else p2img3W
+            else:
+                image = p2img2W if direction == "right" else p2img4W
+            screen.blit(image, centered_position)
+
+        elif player.get_id()==1 and not player.get_arme():
+            if player_pos[0]%2==0:
+                image = p1img1 if direction == "right" else p1img3
+            else:
+                image = p1img2 if direction == "right" else p1img4
+            screen.blit(image, centered_position)
         else:
-            if direction=="right":
-                screen.blit(p1img2, pixel_pos)
-            else: screen.blit(p1img4, pixel_pos)
+            if player_pos[0]%2==0:
+                image = p2img1 if direction == "right" else p2img3
+            else:
+                image = p2img2 if direction == "right" else p2img4
+            screen.blit(image, centered_position)
+
+        if not player.get_vivant():
+            screen.blit(sprite, centered_position)
 
 
 # Main loop

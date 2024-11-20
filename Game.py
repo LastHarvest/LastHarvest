@@ -1,4 +1,5 @@
 import random
+from time import sleep
 
 from Resource import Resource
 from Player import Player
@@ -65,6 +66,8 @@ class Game:
         if players[i].has_arme():
             end = players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
+                players[i].tuer(players[abs(i - 1)])
+                self.__winner = i
                 self.__running = False
 
         elif players[i].get_points() >= 30 and resources[0].is_notTaken():

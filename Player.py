@@ -22,6 +22,9 @@ class Player(ABC):
         """Return the current points of the agent."""
         return self.points
 
+    def get_id(self):
+        return self.id
+
     @abstractmethod
     def set_points(self):
         pass
