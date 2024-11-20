@@ -17,6 +17,7 @@ class Player(ABC):
         self.possession = []
         self.points = 0
         self.direction = direction
+        self.arme = False
 
     def get_points(self):
         """Return the current points of the agent."""
@@ -91,7 +92,8 @@ class Player(ABC):
 
         return math.sqrt((pos_resource[0] - pos_player[0])**2 + (pos_resource[1] - pos_player[1])**2)
 
-
+    def get_id(self):
+        return self.id
 
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
