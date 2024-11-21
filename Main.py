@@ -1,5 +1,6 @@
 import pygame
 import sys
+from time import sleep
 import time
 import random
 from Game import Game
@@ -154,6 +155,7 @@ def draw_players():
             screen.blit(sprite, centered_position)
 
 
+
 def draw_end_game():
     """Draw the end game screen with players' pictures and points."""
     screen.fill((255, 255, 255))
@@ -228,6 +230,7 @@ while True:
         pygame.display.flip()
 
 
+    sleep(1)
     draw_end_game()
 
 

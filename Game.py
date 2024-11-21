@@ -75,6 +75,7 @@ class Game:
                 self.__winner = i
                 self.__running = False
 
+
         elif players[abs(i - 1)].has_arme() and players[abs(i-1)].is_Next(players[i]):
             players[i].fuite(players[abs(i - 1)])
 
