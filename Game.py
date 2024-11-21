@@ -68,6 +68,10 @@ class Game:
         if self.all_Taken() or not(players[i].get_vivant()):
             self.__running = False
 
+        if self.nb_Libre() < 10 and self.__nbResources < self.__nbResMax:
+            self.add_nbResources()
+            self.add_ressources()
+
         if players[i].has_arme():
             players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
@@ -84,9 +88,7 @@ class Game:
         else :
             players[i].move_player_to_resource(players[i].get_best_resource(resources), resources)
 
-        if self.nb_Libre() < 10 and self.__nbResources < self.__nbResMax:
-            self.add_nbResources()
-            self.add_ressources()
+
 
 
 

@@ -14,6 +14,7 @@ class Player(ABC):
         self.arme = False
         self.vivant = True
 
+
     def get_id(self):
         return self.id
 
@@ -51,6 +52,10 @@ class Player(ABC):
         """Return the current position of the agent."""
         return self.position
 
+    def pos_taken(self, pos):
+        return pos == self.position
+
+
     def update_pos(self, new_position):
         """Update the agent's position."""
         self.position = new_position
@@ -77,7 +82,7 @@ class Player(ABC):
         food=0
         for r in self.get_possession():
             if r.get_type()=="food": food+=1
-        return food/(len(self.get_possession())+1)
+        return food/(len(self.get_possession())) if len(self.get_possession())>0 else 0
 
     def get_amount_hydration(self):
         return 1-self.get_amount_food()
@@ -93,18 +98,19 @@ class Player(ABC):
     def choice_formula(self, resource):
         """Applies the choice formula to the given resource"""
         if resource.get_type()=="food":
-            return (resource.get_value()*self.get_amount_food())/(self.get_distance_resource(resource)+1)
+            return (resource.get_value()*(1-self.get_amount_food()))/(self.get_distance_resource(resource)+1)
         else:
-            return (resource.get_value()*self.get_amount_hydration())/(self.get_distance_resource(resource)+1)
+            return (resource.get_value()*(1-self.get_amount_hydration()))/(self.get_distance_resource(resource)+1)
 
 
     def get_best_resource(self, resources):
         """Return the best resource based on the choice formula"""
         maxi=(0,0)
         for r in resources:
-            if (r.is_notTaken() == True) and self.choice_formula(r)>maxi[1]:
+            if r.is_notTaken() and self.choice_formula(r)>maxi[1]:
                 maxi=(r,self.choice_formula(r))
-        return maxi[0] #r[0] resource, r[1] formula value
+        result = maxi[0] if maxi[0]!=0 else resources[1]
+        return result #r[0] resource, r[1] formula value
 
 
     def collect_resource(self, resource):

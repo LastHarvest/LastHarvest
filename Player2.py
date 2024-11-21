@@ -2,6 +2,7 @@ import math
 from Player import Player
 
 
+
 class Player2(Player):
     def __init__(self,id,name,position, direction):
         super().__init__(id,name,position, direction)
