@@ -76,12 +76,26 @@ game_instance = Game()
 font = pygame.font.Font(None, 27)
 
 
+def draw_text_with_contour(text, font, text_color, contour_color, x, y):
+    """Draw text with a contour."""
+    base_text = font.render(text, True, contour_color)
+    text_rect = base_text.get_rect(center=(x, y))
+
+    # Draw contour
+    screen.blit(base_text, text_rect.move(-1, -1))
+    screen.blit(base_text, text_rect.move(1, -1))
+    screen.blit(base_text, text_rect.move(-1, 1))
+    screen.blit(base_text, text_rect.move(1, 1))
+
+    # Draw main text
+    main_text = font.render(text, True, text_color)
+    screen.blit(main_text, text_rect)
+
 def draw_player_points():
-    """Draw the players' points on the screen."""
     y_offset = 40
     for player in game_instance.get_players():
-        points_text = font.render(f"{player.name} Points: {player.get_points()}", True, (0, 0, 0))
-        screen.blit(points_text, (10, y_offset))
+        points_text = f"{player.name} Points: {player.get_points()}"
+        draw_text_with_contour(points_text, font, (0, 0, 0), (255, 255, 255), 10 + font.size(points_text)[0] // 2, y_offset)
         y_offset += 30
 
 def draw_resources():
@@ -140,47 +154,88 @@ def draw_players():
             screen.blit(sprite, centered_position)
 
 
-
-last_time = time.time()
-
-
-while game_instance.get_running():
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: game_instance.stop_game()
-
-    current_time = time.time()
-
-    if current_time - last_time >= 1:
-
-        game_instance.increment_time()
-
-        game_instance.action()
-
-
-        last_time = current_time
-
+def draw_end_game():
+    """Draw the end game screen with players' pictures and points."""
     screen.fill((255, 255, 255))
-
-    for x in range(0, window_size, cell_size):
-        for y in range(0, window_size, cell_size):
-            rect = pygame.Rect(x, y, cell_size, cell_size)
-            pygame.draw.rect(screen, (0, 0, 0), rect, 1)
-
     screen.blit(background, (0, 0))
     draw_resources()
     draw_player_points()
     draw_players()
+    screen.blit(background, (0, 0))
 
+    y_offset = 100
+    for player in game_instance.get_players():
+        points_text = f"{player.name} Points: {player.get_points()}"
+        if player.get_id() == 1:
+            screen.blit(p1img1, (window_size // 4 - p2img1.get_width() // 2, y_offset))
+            draw_text_with_contour(points_text, font, (0, 0, 0), (255, 255, 255), window_size // 4, y_offset - 30)
+        else:
+            screen.blit(p2img1, (3 * window_size // 4 - p2img1.get_width() // 2, y_offset))
+            draw_text_with_contour(points_text, font, (0, 0, 0), (255, 255, 255), 3 * window_size // 4, y_offset - 30)
 
-    # Render the time text
-    time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
-    screen.blit(time_text, (10, 10))
-    #screen.blit(background, (0, 0))
-    # Update the display
     pygame.display.flip()
 
 
-pygame.quit()
-sys.exit()
+last_time = time.time()
+
+
+
+while True:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                pygame.quit()
+                sys.exit()
+
+    while game_instance.get_running():
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_s: game_instance.stop_game()
+
+        current_time = time.time()
+
+        if current_time - last_time >= 1:
+
+            game_instance.increment_time()
+
+            game_instance.action()
+
+
+            last_time = current_time
+
+        screen.fill((255, 255, 255))
+
+        for x in range(0, window_size, cell_size):
+            for y in range(0, window_size, cell_size):
+                rect = pygame.Rect(x, y, cell_size, cell_size)
+                pygame.draw.rect(screen, (0, 0, 0), rect, 1)
+
+        screen.blit(background, (0, 0))
+        draw_resources()
+        draw_player_points()
+        draw_players()
+
+
+        # Render the time text
+        time_text = font.render(f"Time: {game_instance.get_time()}", True, (0, 0, 0))
+        screen.blit(time_text, (10, 10))
+        #screen.blit(background, (0, 0))
+        # Update the display
+        pygame.display.flip()
+
+
+    draw_end_game()
+
+
+
+
+
+
+
+
+
 

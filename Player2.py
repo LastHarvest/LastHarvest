@@ -46,17 +46,17 @@ class Player2(Player):
         p = self.get_pos()
         pp = player2.get_pos()
 
-        if (p[0] <= pp[0]) or (p[0] > pp[0] + 1) and p[0] > 2:
+        if ((p[0] <= pp[0]) or (p[0] > pp[0] + 1)) and p[0] > 2:
             print("left")
             self.accelerate_left()
-        elif (p[0] >= pp[0]) or (p[0] < pp[0] - 1) and p[0] < 4:
+        elif ((p[0] >= pp[0]) or (p[0] < pp[0] - 1) )and p[0] < 4:
             print("right")
             self.accelerate_right()
         else:
-            if (p[1] <= pp[1]) or (p[1] > pp[1] + 1) and p[1] > 2:
+            if ((p[1] <= pp[1]) or (p[1] > pp[1] + 1)) and p[1] > 2:
                 print("down")
                 self.accelerate_down()
-            elif (p[1] >= pp[1]) or (p[1] < pp[1] - 1) and p[1] < 4:
+            elif ((p[1] >= pp[1]) or (p[1] < pp[1] - 1) )and p[1] < 4:
                 print("up")
                 self.accelerate_up()
 

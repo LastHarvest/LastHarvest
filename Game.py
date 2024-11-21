@@ -65,13 +65,13 @@ class Game:
         players = self.__players
         resources = self.__resources
 
-        if self.all_Taken():
+        if self.all_Taken() or not(players[i].get_vivant()):
             self.__running = False
 
         if players[i].has_arme():
             players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
-                players[i].tuer(players[abs(i - 1)])
+                players[abs(i - 1)].tuer()
                 self.__winner = i
                 self.__running = False
 
