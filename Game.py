@@ -1,4 +1,5 @@
 import random
+from time import sleep
 
 from Resource import Resource
 from Player import Player
@@ -13,8 +14,8 @@ class Game:
         self.__nbResources = 7
         self.__winner = -1
         self.__time = 0
-        self.__players = [Player1(1, "Player1", (0, 0),"right"),
-                            Player2(2, "Player2", (6, 6),"left")]
+        self.__players =  [Player1(1, "Player1", (0, 0),"right"),
+           Player2(2, "Player2", (6, 6),"left")]
         self.__resources = [
                             Resource(0, 0, (3, 3), "Arme", 0,FALSE),
                             Resource(2, 9, (3, 4), "Food", 1,TRUE),
@@ -70,6 +71,8 @@ class Game:
         if players[i].has_arme():
             players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
+                players[i].tuer(players[abs(i - 1)])
+                self.__winner = i
                 self.__running = False
 
         elif players[abs(i - 1)].has_arme() and players[abs(i-1)].is_Next(players[i]):
