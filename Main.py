@@ -17,6 +17,8 @@ window_size = 700
 grid_size = 7
 cell_size = window_size // grid_size
 
+
+
 image1= pygame.image.load('Pictures/food.png')
 image1 = pygame.transform.scale(image1,(int(cell_size*0.6),int(cell_size*0.6)))
 image2= pygame.image.load('Pictures/food2.png')
@@ -174,6 +176,10 @@ def draw_end_game():
         else:
             screen.blit(p2img1, (3 * window_size // 4 - p2img1.get_width() // 2, y_offset))
             draw_text_with_contour(points_text, font, (0, 0, 0), (255, 255, 255), 3 * window_size // 4, y_offset - 30)
+    nb_tours_text = f"Total Turns: {game_instance.nb_tours}"
+    nb_tours_p_text = f"Turns with Weapon: {game_instance.nb_tours_p}"
+    draw_text_with_contour(nb_tours_text, font, (0, 0, 0), (255, 255, 255), window_size // 2, y_offset + 100)
+    draw_text_with_contour(nb_tours_p_text, font, (0, 0, 0), (255, 255, 255), window_size // 2, y_offset + 130)
 
     pygame.display.flip()
 

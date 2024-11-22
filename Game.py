@@ -10,10 +10,15 @@ from Player2 import Player2
 class Game:
     def __init__(self):
         self.__running = True
-        self.__nbResMax = 14
-        self.__nbResources = 7
+        self.__nbResMax = 11
+        self.__nbResources = 3
+        self.__pts_nec = 50
         self.__winner = -1
         self.__time = 0
+
+        self.nb_tours = 0
+        self.nb_tours_p = 0
+
         self.__players =  [Player1(1, "Player1", (0, 0),"right"),
            Player2(2, "Player2", (6, 6),"left")]
         self.__resources = [
@@ -48,7 +53,7 @@ class Game:
         val = random.randrange(9, 20)
         test = random.randrange(1, 2)
 
-        if (players[0].get_points() >= 30 or players[1].get_points() >= 30) and not (resources[0].has_Appeared()):
+        if ((players[0].get_points() >= self.__pts_nec) or (players[1].get_points() >= self.__pts_nec)) and not (resources[0].has_Appeared()):
             print("Setting the weapon")
             resources[0].set_True()
         elif test == 1:
@@ -64,11 +69,13 @@ class Game:
         i = self.__time % 2
         players = self.__players
         resources = self.__resources
+        self.nb_tours += 1
 
         if self.all_Taken() or not(players[i].get_vivant()):
             self.__running = False
 
         if players[i].has_arme():
+            self.nb_tours_p += 1
             players[i].move_player_to_player(players[abs(i - 1)])
             if players[i].get_pos() == players[abs(i - 1)].get_pos():
                 players[abs(i - 1)].tuer()
@@ -77,9 +84,10 @@ class Game:
 
 
         elif players[abs(i - 1)].has_arme() and players[abs(i-1)].is_Next(players[i]):
+            self.nb_tours_p += 1
             players[i].fuite(players[abs(i - 1)])
 
-        elif players[i].get_points() >= 50 and resources[0].is_notTaken():
+        elif players[i].get_points() >= self.__pts_nec and resources[0].is_notTaken():
             players[i].move_player_to_resource(resources[0], resources)
 
         else :
